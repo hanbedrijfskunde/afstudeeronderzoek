@@ -1,6 +1,6 @@
 # Fase 2 - Discovery
 
-- Begrijp je hoe de kwaliteit van je onderzoeksvraag en kwaliteit van je onderzoek samenhangt met de eindcompetenties en verwachte eindniveau's?
+- Begrijp je hoe de kwaliteit van je onderzoeksvraag en uitvoering van het onderzoek samenhangt met de getoetste eindkwalificaties?
 
 ![Output preparation fase](images/preparation-discovery.png)
 
@@ -36,5 +36,14 @@ Maak onderscheid naar theoretische, empirische en analystische vragen.
 :::
 
 :::{admonition} Opdracht 3
-Ontwerp je conceptuele model en beschrijf daarmee 
+Ontwerp je conceptuele model en beschrijf aan hand hiervan het vraagstuk waar je onderzoek naar gaat doen.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MnfRdTCUIsc?si=BwPjOes7XhW5AJJX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+```{figure} images/ishikawa-model.png
+---
+name: ishikawa-model
+---
+Voorbeeld Ishikawa model door <a href="https://de.wikipedia.org/wiki/User:FabianLange" class="extiw" title="de:User:FabianLange">FabianLange</a> at <a class="external text" href="https://de.wikipedia.org">de.wikipedia</a> - Translated from <a href="https://en.wikipedia.org/wiki/File:Ursache_Wirkung_Diagramm_allgemein.svg" class="extiw" title="en:File:Ursache Wirkung Diagramm allgemein.svg">en:File:Ursache_Wirkung_Diagramm_allgemein.svg</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=6444290">Koppeling</a>
+```
 :::
