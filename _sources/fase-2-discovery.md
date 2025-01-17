@@ -32,7 +32,7 @@ Formuleer een aantal passende hoofdvragen en bespreek deze met de opdrachtgever.
 :::{admonition} Opdracht 2
 Stel, nadat je de definitieve onderzoeksvraag hebt vastgesteld, een set van deelvragen op. De set moet zodanig zijn dat als je ze allemaal beantwoordt, je een volledig conclusie kunt opstellen ten behoeve van de beantwoording van de hoofdvraag.
 
-Maak onderscheid naar theoretische, empirische en analystische vragen.
+Maak onderscheid naar theoretische, empirische en analytische vragen.
 :::
 
 :::{admonition} Opdracht 3
