@@ -1,0 +1,5 @@
+## Build book
+jb build book
+
+## Publish to Github Pages
+ghp-import -n -p -f book/_build/html
