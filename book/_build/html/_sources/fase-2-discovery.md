@@ -6,13 +6,13 @@ Nu je vanuit de **Preparation**-fase een duidelijk beeld hebt van de formele eis
 
 ## Kwaliteit onderzoeksvraag
 
-Bij deze fase hoort de reflectievraag: **“Welke kwaliteit van mijn onderzoeksvraag en de uitwerking daarvan past bij de getoetste eindkwalificaties?”**. Door hier bewust bij stil te staan, zorg je dat jouw onderzoek niet alleen voldoet aan de formele eisen, maar ook aantoont dat je over de benodigde competenties beschikt om op HBO-niveau af te studeren. Er zijn wat dat betreft twee aspecten die belangrijk zijn:
+Bij deze fase hoort de reflectievraag: **“Welke kwaliteit van mijn onderzoeksvraag en de uitwerking daarvan past bij de getoetste eindkwalificaties?”**. Door hier bewust bij stil te staan, zorg je dat jouw onderzoek niet alleen voldoet aan de formele eisen, maar ook aantoont dat je over de benodigde competenties beschikt om op HBO-eindniveau af te studeren. Er zijn wat dat betreft twee aspecten die belangrijk zijn:
 
 1. Mate van complexiteit van het vraagstuk
 2. De bijdrage aan het leervermogen en verandercapaciteit van de organisatie
 
 ## Complexiteit van het vraagstuk en Wicked Problems
-Voor je afstudeeronderzoek wordt verwacht dat je een onderzoeksvraag formuleert die niet alleen duidelijk en afgebakend is, maar ook voldoende complexiteit biedt. Dit betekent dat je vraagstuk op HBO-niveau moet aansluiten bij de uitdagingen binnen een organisatie en onderbouwd is met relevante theorieën en praktijkobservaties.
+Voor je afstudeeronderzoek wordt verwacht dat je een onderzoeksvraag formuleert die niet alleen duidelijk en afgebakend is, maar ook voldoende complexiteit biedt. Dit betekent dat je vraagstuk op HBO-eindniveau moet aansluiten bij de uitdagingen binnen een organisatie en onderbouwd is met relevante theorieën en praktijkobservaties.
 
 Het concept *Wicked Problems* helpt je om te beoordelen of je probleem ‘wicked’ (complex, weinig eenduidige oplossingen en sterk verweven met de omgeving) of eerder ‘tame’ (eenvoudiger, met duidelijke oplossingsrichtingen) is. **Tame vraagstukken** laten zich doorgaans oplossen via bekende methoden en hebben een helder einddoel. Denk bijvoorbeeld aan:  
 - *Optimalisatie van een logistiek proces:* “Hoe kunnen we het pick-and-pack-proces in het magazijn met 15% versnellen?”  
@@ -22,7 +22,7 @@ Bij **Wicked Problems** is er geen eenduidige oplossing, spelen verschillende be
 - *Implementeren van Agile-werkwijzen in een traditionele afdeling:* “Hoe kan een afdeling de overstap maken naar Agile-werkwijzen, terwijl andere afdelingen blijven werken met traditionele plannings- en budgetteringscycli?”  
 - *Balanceren van kostenbesparingen en servicekwaliteit:* “Hoe kunnen we onze operationele kosten verlagen, zonder dat de klanttevredenheid of interne samenwerkingsprocessen eronder lijden?”  
 
-Hoe ‘wicked’ jouw probleem is, bepaalt voor een groot deel of je onderzoeksvraag de juiste diepgang en complexiteit heeft voor een afstudeeropdracht op HBO-niveau. In de onderstaande **video** vind je een uitgebreide toelichting op wat Wicked Problems precies zijn en hoe je hiermee kunt omgaan.
+Hoe ‘wicked’ jouw probleem is, bepaalt voor een groot deel of je onderzoeksvraag de juiste diepgang en complexiteit heeft voor een afstudeeropdracht op HBO-eindniveau. In de onderstaande **video** vind je een uitgebreide toelichting op wat Wicked Problems precies zijn en hoe je hiermee kunt omgaan.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6QaVW_nNMaE?si=v45VMud_a-xvFy2P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -56,7 +56,7 @@ Niveau's van leren binnen organisaties. Uit: {cite}`noauthor_triple_2022`
   2. *Bijstellen van de missie richting circulaire bedrijfsvoering* (Triple loop)  
      - Je bevraagt hier de fundamenten van de organisatie: waarom doen we wat we doen, en moeten we onze kernwaarden/ missie aanpassen om toekomstbestendig te blijven?
 
-**Kortom**, een onderzoeksvraag op HBO-niveau reikt verder dan enkel procesoptimalisatie. Probeer vraagstukken te formuleren die (minstens) een *Double loop*-aspect in zich hebben, zodat je laat zien dat je de onderliggende aannames en inzichten ter discussie stelt en bijdraagt aan het leer- en verandervermogen van de organisatie.
+**Kortom**, een onderzoeksvraag op HBO-eindniveau reikt verder dan enkel procesoptimalisatie. Probeer vraagstukken te formuleren die (minstens) een *Double loop*-aspect in zich hebben, zodat je laat zien dat je de onderliggende aannames en inzichten ter discussie stelt en bijdraagt aan het leer- en verandervermogen van de organisatie.
 
 :::{admonition} Opdracht 1
 Formuleer een aantal passende hoofdvragen en bespreek deze met de opdrachtgever. Bepaal samen de definitieve onderzoeksvraag. Dit mag een nieuwe vraag zijn die nog niet was opgenomen in de oorspronkelijke set.
