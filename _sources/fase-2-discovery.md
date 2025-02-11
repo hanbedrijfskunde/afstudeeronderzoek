@@ -75,11 +75,11 @@ Een conceptueel model is een visuele weergave van *welke* factoren (variabelen) 
 
 In de opleiding heb je misschien al kennisgemaakt met het *Ishikawa-model*. Daarin noteer je aan de ‘graten’ de mogelijke oorzaken van een probleem (bijvoorbeeld factoren zoals **Mens**, **Methoden**, **Machine**, **Materiaal**, **Milieu** en **Management**). Hoewel een Ishikawa-diagram doorgaans vooral oorzaken van een probleem in kaart brengt, is het een goede oefening om te leren denken in variabelen en hun onderlinge relaties.
 
-```{figure} images/ishikawa-model.png
+```{figure} images/ishikawa-model.svg
 ---
 name: ishikawa-model
 ---
-Voorbeeld Ishikawa model door <a href="https://de.wikipedia.org/wiki/User:FabianLange" class="extiw" title="de:User:FabianLange">FabianLange</a> at <a class="external text" href="https://de.wikipedia.org">de.wikipedia</a> - Translated from <a href="https://en.wikipedia.org/wiki/File:Ursache_Wirkung_Diagramm_allgemein.svg" class="extiw" title="en:File:Ursache Wirkung Diagramm allgemein.svg">en:File:Ursache_Wirkung_Diagramm_allgemein.svg</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=6444290">Koppeling</a>
+Voorbeeld Ishikawa model door <a href="https://de.wikipedia.org/wiki/User:FabianLange" class="extiw" title="de:User:FabianLange">FabianLange</a> at <a class="external text" href="https://de.wikipedia.org">de.wikipedia</a> - Translated from <a href="https://en.wikipedia.org/wiki/File:Ursache_Wirkung_Diagramm_allgemein.svg" class="extiw" title="en:File:Ursache Wirkung Diagramm allgemein.svg">en:File:Ursache_Wirkung_Diagramm_allgemein.svg</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=6444290">Link</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=6444290">Koppeling</a>
 ```
 
 Voor een **conceptueel model** ga je een stap verder:  
