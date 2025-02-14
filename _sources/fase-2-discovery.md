@@ -96,7 +96,7 @@ Voor een **conceptueel model** ga je een stap verder:
 Zo krijg je een duidelijk startpunt voor je onderzoek: het model laat zien welke samenhangen je wilt testen of analyseren, en vormt daarmee de basis voor de data die je gaat verzamelen en de analyses die je uitvoert.
 :::
 
-:::{seealso} # Workshop onderzoeksvraag en -methodes
+:::{seealso} ## Workshop onderzoeksvraag en -methodes
 
 Tijdens deze workshop gaan we praktisch aan de slag met het verbeteren van je onderzoeksvraag en het afstemmen van je onderzoeksmethoden. We richten ons op de kwaliteit van je vraagstelling en hoe deze aansluit bij de eindkwalificaties van je opleiding. Door middel van self-assessment en peer review krijg je concrete handvatten om je onderzoek naar een hoger niveau te tillen.
 
@@ -126,5 +126,5 @@ Tijdens deze workshop gaan we praktisch aan de slag met het verbeteren van je on
 
 **NB:** De gegevens in dit formulier en de bijbehorende rapportage zijn strikt vertrouwelijk en uitsluitend bestemd voor persoonlijk gebruik. Deze informatie wordt op geen enkele wijze gedeeld met of verzonden naar externe partijen.
 
-[Link](https://hanbedrijfskunde.github.io/scan-onderzoeksvraag/) naar self-assessment tool. 
+<a href="https://hanbedrijfskunde.github.io/scan-onderzoeksvraag/" target="_blank">Link</a> naar self-assessment tool. 
 :::
