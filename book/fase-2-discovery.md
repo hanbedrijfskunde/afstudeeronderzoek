@@ -75,11 +75,11 @@ Een conceptueel model is een visuele weergave van *welke* factoren (variabelen) 
 
 In de opleiding heb je misschien al kennisgemaakt met het *Ishikawa-model*. Daarin noteer je aan de ‘graten’ de mogelijke oorzaken van een probleem (bijvoorbeeld factoren zoals **Mens**, **Methoden**, **Machine**, **Materiaal**, **Milieu** en **Management**). Hoewel een Ishikawa-diagram doorgaans vooral oorzaken van een probleem in kaart brengt, is het een goede oefening om te leren denken in variabelen en hun onderlinge relaties.
 
-```{figure} images/ishikawa-model.png
+```{figure} images/ishikawa-model.svg
 ---
 name: ishikawa-model
 ---
-Voorbeeld Ishikawa model door <a href="https://de.wikipedia.org/wiki/User:FabianLange" class="extiw" title="de:User:FabianLange">FabianLange</a> at <a class="external text" href="https://de.wikipedia.org">de.wikipedia</a> - Translated from <a href="https://en.wikipedia.org/wiki/File:Ursache_Wirkung_Diagramm_allgemein.svg" class="extiw" title="en:File:Ursache Wirkung Diagramm allgemein.svg">en:File:Ursache_Wirkung_Diagramm_allgemein.svg</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=6444290">Koppeling</a>
+Voorbeeld Ishikawa model door <a href="https://de.wikipedia.org/wiki/User:FabianLange" class="extiw" title="de:User:FabianLange">FabianLange</a> at <a class="external text" href="https://de.wikipedia.org">de.wikipedia</a> - Translated from <a href="https://en.wikipedia.org/wiki/File:Ursache_Wirkung_Diagramm_allgemein.svg" class="extiw" title="en:File:Ursache Wirkung Diagramm allgemein.svg">en:File:Ursache_Wirkung_Diagramm_allgemein.svg</a>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=6444290">Link</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=6444290">Koppeling</a>
 ```
 
 Voor een **conceptueel model** ga je een stap verder:  
@@ -94,4 +94,37 @@ Voor een **conceptueel model** ga je een stap verder:
 - Een **korte toelichting** waarom je deze variabelen kiest en welke relaties je verwacht te vinden.  
 
 Zo krijg je een duidelijk startpunt voor je onderzoek: het model laat zien welke samenhangen je wilt testen of analyseren, en vormt daarmee de basis voor de data die je gaat verzamelen en de analyses die je uitvoert.
+:::
+
+:::{seealso} # Workshop onderzoeksvraag en -methodes
+
+Tijdens deze workshop gaan we praktisch aan de slag met het verbeteren van je onderzoeksvraag en het afstemmen van je onderzoeksmethoden. We richten ons op de kwaliteit van je vraagstelling en hoe deze aansluit bij de eindkwalificaties van je opleiding. Door middel van self-assessment en peer review krijg je concrete handvatten om je onderzoek naar een hoger niveau te tillen.
+
+### Programma
+
+| Tijd          | Onderdeel |
+|---------------|-----------|
+| 00:00-00:15   | Inloop en welkom |
+| 00:15-00:30   | Uitleg programma |
+| 00:30-00:50   | Instructie kwaliteit vraagstelling (met koppeling naar waardecreatie / complexiteit / relatie eindkwalificaties) |
+| 00:50-01:30   | Self-assessment mbv van reflectievragen en koffiepauze |
+| 01:30-02:00   | Peer review in studentenkring |
+| 02:00-02:30   | Uitleg Fase 3 - Analysis |
+
+### Self-assessment Instructies
+
+* Voor elke eindkwalificatie zijn beoordelingscriteria geformuleerd.
+* Beoordeel in hoeverre je onderzoeksvraag en de beoogde aanpak aansluiten bij deze criteria.
+* Gebruik de reflectievragen om dieper na te denken over mogelijke verbeteringen.
+* Vul alle velden in het formulier zo volledig mogelijk in.
+* Klik op de "Bewaar als PDF" knop om een rapport te genereren.
+
+**Gebruik het gegenereerde rapport:**
+* ... als basis voor een gesprek met je begeleider over de focus en aanpak van je onderzoek.
+* ... om je onderzoeksvraag verder aan te scherpen en te verfijnen.
+* ... als onderdeel van je reflectie op je professionele ontwikkeling.
+
+**NB:** De gegevens in dit formulier en de bijbehorende rapportage zijn strikt vertrouwelijk en uitsluitend bestemd voor persoonlijk gebruik. Deze informatie wordt op geen enkele wijze gedeeld met of verzonden naar externe partijen.
+
+[Link](https://hanbedrijfskunde.github.io/scan-onderzoeksvraag/) naar self-assessment tool. 
 :::
