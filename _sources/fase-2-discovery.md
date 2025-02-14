@@ -95,3 +95,36 @@ Voor een **conceptueel model** ga je een stap verder:
 
 Zo krijg je een duidelijk startpunt voor je onderzoek: het model laat zien welke samenhangen je wilt testen of analyseren, en vormt daarmee de basis voor de data die je gaat verzamelen en de analyses die je uitvoert.
 :::
+
+:::{seealso} # Workshop onderzoeksvraag en -methodes
+
+Tijdens deze workshop gaan we praktisch aan de slag met het verbeteren van je onderzoeksvraag en het afstemmen van je onderzoeksmethoden. We richten ons op de kwaliteit van je vraagstelling en hoe deze aansluit bij de eindkwalificaties van je opleiding. Door middel van self-assessment en peer review krijg je concrete handvatten om je onderzoek naar een hoger niveau te tillen.
+
+### Programma
+
+| Tijd          | Onderdeel |
+|---------------|-----------|
+| 00:00-00:15   | Inloop en welkom |
+| 00:15-00:30   | Uitleg programma |
+| 00:30-00:50   | Instructie kwaliteit vraagstelling (met koppeling naar waardecreatie / complexiteit / relatie eindkwalificaties) |
+| 00:50-01:30   | Self-assessment mbv van reflectievragen en koffiepauze |
+| 01:30-02:00   | Peer review in studentenkring |
+| 02:00-02:30   | Uitleg Fase 3 - Analysis |
+
+### Self-assessment Instructies
+
+* Voor elke eindkwalificatie zijn beoordelingscriteria geformuleerd.
+* Beoordeel in hoeverre je onderzoeksvraag en de beoogde aanpak aansluiten bij deze criteria.
+* Gebruik de reflectievragen om dieper na te denken over mogelijke verbeteringen.
+* Vul alle velden in het formulier zo volledig mogelijk in.
+* Klik op de "Bewaar als PDF" knop om een rapport te genereren.
+
+**Gebruik het gegenereerde rapport:**
+* ... als basis voor een gesprek met je begeleider over de focus en aanpak van je onderzoek.
+* ... om je onderzoeksvraag verder aan te scherpen en te verfijnen.
+* ... als onderdeel van je reflectie op je professionele ontwikkeling.
+
+**NB:** De gegevens in dit formulier en de bijbehorende rapportage zijn strikt vertrouwelijk en uitsluitend bestemd voor persoonlijk gebruik. Deze informatie wordt op geen enkele wijze gedeeld met of verzonden naar externe partijen.
+
+[Link](https://hanbedrijfskunde.github.io/scan-onderzoeksvraag/) naar self-assessment tool. 
+:::
