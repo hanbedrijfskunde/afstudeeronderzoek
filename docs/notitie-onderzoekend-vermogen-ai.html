@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Notitie onderzoekend vermogen en AI</title>
+<style>
+:root{
+  /* HAN-huisstijl: één felle kleur op zwart-wit (tokens uit het IM-hoorcollege) */
+  --han:#E50056; --ink:#000000; --paper:#FFFFFF; --grey:#454545; --grey2:#767676;
+  --wash:#F2F2F0; --roze:#FFE1EC; --geel:#FFE875;
+  --bw:3px; --sh:5px 5px 0 var(--ink);
+  --f:"Avenir Next","Avenir","Nunito Sans","Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:16px;background:var(--wash);color:var(--ink);
+  font-family:var(--f);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.vel{max-width:52rem;margin:clamp(0px,3vw,2rem) auto;background:var(--paper);
+  border:var(--bw) solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  padding:clamp(1.1rem,5vw,3.25rem)}
+p{margin:0 0 .8rem}
+a{color:var(--ink);text-decoration-color:var(--han);text-decoration-thickness:2px;text-underline-offset:2px;overflow-wrap:anywhere}
+strong{font-weight:700}
+
+/* ---------- kop ---------- */
+.merkbalk{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding-bottom:1rem;border-bottom:var(--bw) solid var(--ink)}
+.logo{display:block;height:30px;width:auto;color:var(--ink)}
+.soort{background:var(--han);color:var(--paper);font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;font-size:.8rem;padding:5px 11px}
+.bovenkop{margin:1.6rem 0 .4rem;font-size:.82rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--han)}
+h1{margin:0;font-size:clamp(2rem,5.2vw,3rem);line-height:1.06;font-weight:800;
+  letter-spacing:-.015em;text-wrap:balance}
+.lede{margin:.7rem 0 0;font-size:clamp(1.05rem,2vw,1.25rem);color:var(--grey);font-weight:500}
+.meta{display:grid;grid-template-columns:max-content 1fr;gap:.3rem 1.2rem;
+  margin:1.6rem 0 0;padding:1rem 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  font-size:.94rem}
+.meta dt{font-weight:700}
+.meta dd{margin:0}
+
+/* ---------- in het kort ---------- */
+.kort{margin:2rem 0 0;border:var(--bw) solid var(--ink);border-top:10px solid var(--han);
+  box-shadow:var(--sh);padding:1.1rem 1.3rem .6rem;background:var(--paper)}
+.kort h2{border:0;margin:0 0 .6rem;padding:0;font-size:1.15rem}
+.kort ul{margin:0;padding-left:1.15rem}
+.kort li{margin-bottom:.55rem}
+
+/* ---------- paragrafen ---------- */
+h2{margin:3rem 0 1rem;padding-top:1rem;border-top:var(--bw) solid var(--ink);
+  font-size:clamp(1.35rem,3vw,1.7rem);line-height:1.15;font-weight:800;text-wrap:balance}
+h2 .nr{color:var(--han);margin-right:.5rem}
+h3{margin:0;font-size:1.18rem;line-height:1.2;font-weight:800;text-wrap:balance}
+ul,ol{padding-left:1.25rem}
+li{margin-bottom:.45rem}
+li > ul,li > ol{margin:.35rem 0 .25rem;padding-left:1.2rem}
+li li{margin-bottom:.2rem}
+
+/* ---------- legenda en labels ---------- */
+.legenda{display:grid;grid-template-columns:max-content 1fr;gap:.45rem .9rem;
+  margin:.4rem 0 1rem;font-size:.92rem;align-items:baseline}
+.chip{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.07em;
+  text-transform:uppercase;padding:2px 8px;border:2px solid var(--ink);white-space:nowrap;line-height:1.5}
+.chip.exp{background:var(--ink);color:var(--paper)}
+.chip.data{background:var(--roze)}
+.chip.enq{background:var(--paper)}
+.chip.prak{background:var(--wash);border-style:dashed}
+.chip.obs{background:var(--paper);border-style:double;border-width:3px}
+.chip.twee{background:var(--paper);border-style:dotted;color:var(--grey)}
+
+/* ---------- rolverdeling AI en student ---------- */
+.regie{margin:1.2rem 0 2.2rem}
+.regie figcaption{margin-bottom:.6rem}
+.fasen{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.fase{margin:0;display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;
+  border:var(--bw) solid var(--ink);background:var(--paper)}
+.fase-naam{margin:0;padding:.5rem .7rem;font-weight:800;border-bottom:var(--bw) solid var(--ink);
+  display:flex;align-items:center;gap:.5rem}
+.fase-naam span{display:grid;place-items:center;width:1.5rem;height:1.5rem;flex:none;
+  background:var(--ink);color:var(--paper);font-size:.8rem}
+.rol{margin:0;padding:.5rem .7rem;font-size:.88rem;line-height:1.4}
+.rol b{display:block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
+.rol.ai{background:var(--wash);color:var(--grey)}
+.rol.st{background:var(--roze);border-top:2px solid var(--ink)}
+.doorlopend{margin-top:.7rem;display:flex;border:var(--bw) solid var(--ink)}
+.doorlopend b{flex:none;display:flex;align-items:center;padding:.5rem .8rem;background:var(--han);
+  color:var(--paper);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.doorlopend span{padding:.5rem .8rem;background:var(--roze);font-size:.9rem;line-height:1.4}
+@media (max-width:720px){.fasen{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.fasen{grid-template-columns:1fr}.doorlopend{flex-direction:column}}
+
+/* ---------- aandachtspunten ---------- */
+.punt{margin:1.6rem 0 2rem;border:var(--bw) solid var(--ink);box-shadow:var(--sh);background:var(--paper)}
+.punt-kop{display:flex;align-items:center;gap:.9rem;padding:.85rem 1.1rem;border-bottom:var(--bw) solid var(--ink)}
+.punt-nr{flex:none;display:grid;place-items:center;width:2.2rem;height:2.2rem;
+  background:var(--han);color:var(--paper);font-weight:800;font-size:1.15rem}
+.punt-romp{padding:1rem 1.1rem .4rem}
+.tussenkop{margin:0 0 .4rem;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--grey)}
+.punt-romp ul{margin:0 0 .9rem}
+.bewijs{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:0 0 .9rem;font-size:.85rem}
+.bewijs > span:first-child{font-weight:700;margin-right:.2rem}
+.let{margin:0 0 .9rem;padding:.1rem 0 .1rem .8rem;border-left:4px solid var(--han);font-size:.93rem;color:var(--grey)}
+.ksave{margin:0 -1.1rem;padding:.9rem 1.1rem .3rem;background:var(--geel);border-top:var(--bw) solid var(--ink)}
+.ksave .tussenkop{color:var(--ink)}
+
+/* ---------- tabel ---------- */
+.tabelvak{overflow-x:auto;border:var(--bw) solid var(--ink);margin:1rem 0 .6rem;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:42rem;font-size:.9rem}
+th,td{text-align:left;vertical-align:top;padding:.6rem .7rem;border-bottom:1px solid var(--ink)}
+thead th{background:var(--ink);color:var(--paper);font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;font-weight:800}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{font-weight:800;white-space:nowrap}
+td.nu{color:var(--grey)}
+td.pt{white-space:nowrap;text-align:center}
+td ul{margin:0;padding-left:1rem}
+td li{margin-bottom:.25rem}
+.ja{display:inline-block;background:var(--han);color:var(--paper);font-weight:800;padding:1px 7px}
+.twijfel{display:inline-block;border:2px solid var(--ink);font-weight:800;padding:0 6px}
+.toelichting{display:block;margin-top:.3rem;font-size:.82rem;color:var(--grey)}
+.bijschrift{font-size:.88rem;color:var(--grey)}
+
+/* ---------- citaties en bronnen ---------- */
+a.cite{color:inherit;text-decoration:underline;text-decoration-color:var(--han);
+  text-decoration-thickness:1.5px;text-underline-offset:2px;scroll-margin-top:5rem}
+a.cite:hover,a.cite:focus-visible{background:var(--roze)}
+a.cite:target{background:var(--geel)}
+.bronnen p{padding-left:2em;text-indent:-2em;font-size:.9rem;margin-bottom:.7rem;scroll-margin-top:2rem}
+.bronnen p:target{background:var(--geel);box-shadow:0 0 0 .4rem var(--geel)}
+.terug{display:block;text-indent:0;margin-top:.1rem;font-size:.76rem;color:var(--grey)}
+.terug a{color:var(--grey)}
+
+/* ---------- printknop ---------- */
+.werkbalk{max-width:52rem;margin:0 auto;display:flex;justify-content:flex-end;align-items:center;
+  gap:.5rem 1rem;flex-wrap:wrap;font-size:.85rem;color:var(--grey)}
+.printknop{display:inline-flex;align-items:center;gap:.5rem;font:inherit;font-size:.92rem;font-weight:800;
+  color:var(--paper);background:var(--han);border:var(--bw) solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+  padding:.45rem .9rem;cursor:pointer}
+.printknop svg{width:1.1rem;height:1.1rem}
+.printknop:hover{background:var(--ink)}
+.printknop:active{transform:translate(3px,3px);box-shadow:none}
+.printknop:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* ---------- voet ---------- */
+.voet{margin-top:3rem;padding-top:1rem;border-top:var(--bw) solid var(--ink);
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+  font-size:.82rem;color:var(--grey)}
+.voet .logo{height:20px}
+
+@media (max-width:560px){
+  body{font-size:16px}
+  .meta{grid-template-columns:1fr;gap:0}
+  .meta dt{margin-top:.5rem}
+  .legenda{grid-template-columns:1fr;gap:.15rem}
+  .legenda dd{margin:0 0 .5rem}
+}
+@media print{
+  @page{size:A4;margin:16mm 16mm 20mm;
+    @top-right{content:"HAN · Bedrijfskunde · herijking KSAVE";
+      font-family:"Avenir Next","Avenir","Nunito Sans","Segoe UI",Helvetica,Arial,sans-serif;font-size:8pt;color:#454545}
+    @bottom-left{content:"Onderzoekend vermogen in een tijd van AI · notitie 18 november 2026";
+      font-family:"Avenir Next","Avenir","Nunito Sans","Segoe UI",Helvetica,Arial,sans-serif;font-size:8pt;color:#454545}
+    @bottom-right{content:"Pagina " counter(page) " van " counter(pages);
+      font-family:"Avenir Next","Avenir","Nunito Sans","Segoe UI",Helvetica,Arial,sans-serif;font-size:8pt;color:#454545}
+  }
+  body{background:var(--paper);padding:0;font-size:10.5pt}
+  .werkbalk,.terug{display:none}
+  a.cite{text-decoration:none}
+  .vel{max-width:none;margin:0;border:0;box-shadow:none;padding:0}
+  .punt,.kort{box-shadow:none}
+  .punt{-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .kort,.regie,.punt-kop,.bewijs,.let,li,tr,.bronnen p{break-inside:avoid}
+  .ksave{-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .ksave p,.ksave li{break-inside:avoid}
+  h2,h3,.punt-kop,.tussenkop{break-after:avoid}
+  h2{margin-top:2rem}
+  .tabelvak{overflow:visible}
+  table{min-width:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="werkbalk">
+  <span>Kies in het printvenster <b>Opslaan als PDF</b> als bestemming.</span>
+  <button type="button" class="printknop" onclick="window.print()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+    Opslaan als PDF
+  </button>
+</div>
+<main class="vel">
+
+<header>
+  <div class="merkbalk">
+    <svg class="logo" viewBox="0 0 82 34" role="img" aria-label="Logo HAN"><g fill="currentColor"><path d="m82 34h-19v-3h18.9895719z"/><path d="m13.2527473 28v-12.420318h-8.48351653v12.420318h-4.76923077v-28h4.75824176v11.3563397h8.48351644v-11.3563397h4.7582418v28z"/><path d="m55.5599506 28-8.1433869-19.77045366h-.1223733l.0778739 19.77045366h-4.3720643v-28h5.5624227l8.065513 19.8898798h.1557479v-19.8898798h4.2163164v28z"/><path d="m33.1342079 0h-5.7320888l-4.5665994 18.7860465-3.8355197 1.324031 1.1972755 3.6682171 1.5469223-.531783-1.1548941 4.7534884h4.2381433l1.536327-6.3271318 7.2790111-2.496124 2.1190716 8.8232558h4.2381433zm-5.7320888 17.2015504 2.723007-11.17829459h.2754793l2.2780021 9.36589149z"/></g></svg>
+    <span class="soort">Notitie</span>
+  </div>
+  <p class="bovenkop">Bedrijfskunde · herijking KSAVE 2026</p>
+  <h1>Onderzoekend vermogen in een tijd van AI</h1>
+  <p class="lede">Eerste verkenning van aandachtspunten voor de KSAVE</p>
+  <dl class="meta">
+    <dt>Aan</dt><dd>Curriculumcommissie (CuCo) Bedrijfskunde</dd>
+    <dt>Van</dt><dd>Witek en Arjen, verantwoordelijk voor onderzoekend vermogen</dd>
+    <dt>Datum</dt><dd>18 november 2026</dd>
+    <dt>Status</dt><dd>Eerste verkenning, nog niet afgestemd met de docenten van jaar 1 en 2</dd>
+    <dt>Verwerkt in KSAVE</dt><dd>Uiterlijk 14 december 2026</dd>
+  </dl>
+</header>
+
+<section class="kort" aria-labelledby="kort">
+  <h2 id="kort">In het kort</h2>
+  <ul>
+    <li>Afstudeerbegeleiders zien dat in de afstudeerfase nog te veel tijd naar onderzoekstraining gaat. Studenten leren daar vaardigheden die al in jaar 1 en 2 thuishoren.</li>
+    <li>AI kan veel stappen van een onderzoek uitvoeren: zoeken, samenvatten, coderen, analyseren en schrijven. AI-zoektools vinden zelfstandig vaak maar een deel van de relevante literatuur en citeren geregeld bronnen die de bewering niet dragen. De student houdt de regie over het geheel. De student stelt de vraag, maakt de ontwerpkeuzes, stuurt AI bij tijdens de uitvoering en beoordeelt de uitkomst. Ook onderhoudt de student het contact met opdrachtgever, respondenten en andere stakeholders.</li>
+    <li>Met AI presteren studenten in experimenten bijna altijd beter. Wat zonder AI overblijft, hangt af van het gebruik. Studenten die het denkwerk aan AI overlaten, presteren daarna zonder AI gelijk of slechter. Studenten die eerst zelf werken of AI als tutor gebruiken, houden ook zonder AI winst over. Die winst is vooral op korte termijn gemeten. Of probleemformulering op langere termijn slijt, is nog niet gemeten.</li>
+    <li>We zien zeven aandachtspunten. De drie belangrijkste:<ul><li>Laat de student bij elke onderzoeksstap die om een eigen oordeel vraagt, eerst zelf werken en dan met AI.</li><li>Leer studenten vanaf periode 1 AI-uitkomsten controleren.</li><li>Toets wat de student zonder AI kan.</li></ul></li>
+    <li>Probleemoriëntatie, triangulatie en bewustzijn van eigen bias staan nu laat in de KSAVE (periode 3 en cluster F). Wij stellen voor om ze in eenvoudige vorm al in jaar 1 en 2 te oefenen. Dan krijgt de afstudeerfase ruimte voor verdieping.</li>
+    <li>Docenten volgen het onderzoeksproces op vaste momenten en doen het controleren van AI zelf voor. Eigen onderzoek houdt docenten bij in een vak waarin organisaties snel automatiseren. Daarvoor is onderzoekstijd nodig (paragraaf 6).</li>
+    <li>De landelijke Npuls-visie op toetsing in het AI-tijdperk beschrijft dezelfde lijn (<a class="cite" id="c-beekman-2025-1" href="#bron-beekman-2025">Beekman et al., 2025</a>). Het AI-kader van de HAN (<a class="cite" id="c-vanpopta-2025-1" href="#bron-vanpopta-2025">Van Popta et al., 2025</a>) en de HAN-toolkit voor AI-bestendig toetsen (<a class="cite" id="c-themagroep-2025-1" href="#bron-themagroep-2025">Themagroep AI – Toetsing, 2025</a>) sluiten daarop aan.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="s1">
+  <h2 id="s1"><span class="nr">1</span>Aanleiding en werkwijze</h2>
+  <p>De CuCo vraagt ons de KSAVE te herijken. Voor onderzoekend vermogen spelen twee ontwikkelingen.</p>
+  <p><strong>Te laat geleerd.</strong> Afstudeerbegeleiders zien dat studenten in de afstudeerfase nog onderzoekstraining nodig hebben. Een onderzoeksvraag formuleren, data verzamelen en verwerken, de uitkomsten kritisch duiden: dat moeten studenten dan al kunnen. Vaak kunnen ze het nog niet.</p>
+  <p><strong>Onderzoek doen is veranderd.</strong> Een student laat in een middag een literatuurverkenning maken, interviewtranscripten coderen en een rapport schrijven. Het eindproduct ziet er verzorgd uit. Aan dat eindproduct zien we steeds moeilijker of de student het onderzoek beheerst.</p>
+  <p><strong>Toezichthouders zien het ook.</strong> In 2025 gebruikte 75% van de hbo-studenten minstens wekelijks AI voor de opleiding. Veel studenten krijgen geen instructie over hoe ze AI goed gebruiken (<a class="cite" id="c-inspectie-2026-1" href="#bron-inspectie-2026">Inspectie van het Onderwijs, 2026</a>). Ongeveer 80% van de examencommissies kreeg te maken met (vermoedens van) fraude met generatieve AI (<a class="cite" id="c-inspectie-2025-1" href="#bron-inspectie-2025">Inspectie van het Onderwijs, 2025</a>). De NVAO ziet dat visitatierapporten geen expliciete aandacht besteden aan de kwaliteit van eindwerken. Opleidingen vertalen AI als onderzoeksvaardigheid nog niet naar leerdoelen (<a class="cite" id="c-nvao-2026-1" href="#bron-nvao-2026">NVAO, 2026</a>).</p>
+  <p>Voor deze verkenning zijn twee soorten bronnen gebruikt. De eerste is de AI-wiki van Witek: een kennisbank van ruim 430 bronnen over AI in werk en organisaties. Witek kiest sinds april 2026 de bronnen. AI vat ze samen en legt verbanden. De AI-assistent Claude doorzocht de wiki met 26 zoekvragen en las de ruim twintig meest relevante pagina's.</p>
+  <p>De tweede is een online literatuuronderzoek naar onderwijsonderzoek en Nederlands beleid uit 2024 tot en met 2026. Claude zocht daarvoor in vier richtingen: leren met en zonder AI, AI in de onderzoekspraktijk, curriculum en toetsing, en de Nederlandse context. Claude controleerde elke bron uit dit literatuuronderzoek via de DOI of de pagina van de uitgever. Claude schreef ook een eerste versie van deze notitie. Wij vulden die aan en stuurden de tekst bij. Het volledige bronnenrapport telt ruim honderd bronnen en is bij ons op te vragen.</p>
+  <p>Daarna zocht Claude gericht naar studies uit 2024 tot en met 2026 die onze uitspraken tegenspreken. Claude zocht ook kritiek op de bronnen die wij gebruiken. Geen van onze bronnen is ingetrokken, en geen aandachtspunt is weerlegd. Wel bleken enkele uitspraken te stellig. Die hebben wij aangepast. Ook dit rapport is bij ons op te vragen.</p>
+  <p>Bij elk aandachtspunt staat hoe sterk het bewijs is:</p>
+  <dl class="legenda">
+    <dt><span class="chip exp">Experiment</span></dt><dd>gecontroleerd onderzoek met een meting</dd>
+    <dt><span class="chip obs">Observationeel onderzoek</span></dt><dd>meting in de praktijk zonder controlegroep</dd>
+    <dt><span class="chip enq">Enquête of interviews</span></dt><dd>wat mensen zeggen te zien</dd>
+    <dt><span class="chip prak">Praktijk</span></dt><dd>ervaring van één organisatie of spreker</dd>
+    <dt><span class="chip twee">Preprint of werkdocument</span></dt><dd>onderzoek dat nog geen peer review heeft gehad</dd>
+    <dt><span class="chip data">Beleid of richtlijn</span></dt><dd>beleidsstuk of officiële richtlijn</dd>
+  </dl>
+  <p>De wiki gaat vooral over het werkveld. Het literatuuronderzoek voegt onderwijsonderzoek en Nederlands beleid toe. Paragraaf 5 noemt de grenzen van beide.</p>
+</section>
+
+<section aria-labelledby="s2">
+  <h2 id="s2"><span class="nr">2</span>Zeven aandachtspunten</h2>
+  <p>De punten gaan uit van deze rolverdeling. AI voert stappen uit. De student houdt de regie over het hele onderzoek.</p>
+  <figure class="regie">
+    <figcaption class="tussenkop">Wie doet wat in een onderzoek met AI</figcaption>
+    <ol class="fasen">
+      <li class="fase">
+        <p class="fase-naam"><span>1</span>Vraag</p>
+        <p class="rol ai"><b>AI</b>zoekt bronnen en vat ze samen</p>
+        <p class="rol st"><b>Student</b>stelt de vraag en bakent af</p>
+      </li>
+      <li class="fase">
+        <p class="fase-naam"><span>2</span>Ontwerp</p>
+        <p class="rol ai"><b>AI</b>stelt methoden en opties voor</p>
+        <p class="rol st"><b>Student</b>kiest het ontwerp en verantwoordt die keuze</p>
+      </li>
+      <li class="fase">
+        <p class="fase-naam"><span>3</span>Uitvoering</p>
+        <p class="rol ai"><b>AI</b>codeert, analyseert en schrijft</p>
+        <p class="rol st"><b>Student</b>stuurt AI bij en controleert tussentijds</p>
+      </li>
+      <li class="fase">
+        <p class="fase-naam"><span>4</span>Beoordeling</p>
+        <p class="rol ai"><b>AI</b>maakt een eerste versie van conclusies en advies</p>
+        <p class="rol st"><b>Student</b>beoordeelt de uitkomst en is er verantwoordelijk voor</p>
+      </li>
+    </ol>
+    <div class="doorlopend"><b>Doorlopend</b><span>De student betrekt opdrachtgever, respondenten en andere stakeholders, en communiceert met hen over vraag, aanpak en uitkomsten.</span></div>
+  </figure>
+
+  <article class="punt">
+    <div class="punt-kop"><span class="punt-nr">1</span><h3>De student houdt de regie over het hele onderzoek</h3></div>
+    <div class="punt-romp">
+      <p class="tussenkop">Wat de bronnen laten zien</p>
+      <ul>
+        <li>BCG sprak 70 bestuurders over wat AI met de vaardigheden van hun mensen doet. Ruim de helft ziet vaardigheden nu al afnemen. Probleemformulering en oordeelsvermogen lopen volgens hen het meeste risico. Negen op de tien zien medewerkers vertrouwen op AI-uitkomsten die niemand heeft gecontroleerd (Sagar Goel in <a class="cite" id="c-bcg-2026-1" href="#bron-bcg-2026">Boston Consulting Group, 2026</a>).</li>
+        <li>In een veldexperiment bij Procter &amp; Gamble verhoogde AI vooral de kwaliteit van de ideeën die mensen bedachten. Het menselijk oordeel hield zijn waarde bij het kiezen tussen die ideeën (<a class="cite" id="c-dellacqua-2026b-1" href="#bron-dellacqua-2026b">Dell'Acqua et al., 2026b</a>).</li>
+        <li>Bestuurders in een interviewstudie: "De kwaliteit van het AI-antwoord hangt af van hoe goed je het probleem definieert" (<a class="cite" id="c-bevilacqua-2025-1" href="#bron-bevilacqua-2025">Bevilacqua et al., 2025</a>, vertaald).</li>
+        <li>In een enquête onder 319 kenniswerkers zeiden deelnemers dat hun kritisch denken met AI verschoof naar informatie controleren, antwoorden samenvoegen en het werk bewaken. Meer vertrouwen in AI ging samen met minder kritisch denken (<a class="cite" id="c-lee-2025-1" href="#bron-lee-2025">Lee et al., 2025</a>).</li>
+        <li>Bij ontwerpkeuzes kan AI een vaste voorkeur hebben. In een strategiesimulatie kozen de nieuwste taalmodellen stelselmatig voor het bestaande product en investeerden ze niet in de nieuwe technologie. Dat verklaart deels waarom ze lager scoorden dan MBA-studenten. Redeneermodellen van eind 2024 en begin 2025 scoorden juist hoger (<a class="cite" id="c-allen-2026-1" href="#bron-allen-2026">Allen &amp; McDonald, 2026</a>). Een McKinsey-partner: "Je kunt gen AI geen beslissingen laten nemen" (<a class="cite" id="c-mckinsey-2026c-1" href="#bron-mckinsey-2026c">McKinsey &amp; Company, 2026c</a>, vertaald).</li>
+        <li>In een labexperiment van 22 minuten met 141 betaalde deelnemers verbeterden zwakke deelnemers met AI. Sterke deelnemers wonnen er niets bij. Zwakke deelnemers sloegen het analytische werk over en namen AI-uitkomsten over (<a class="cite" id="c-bergenholtz-2026-1" href="#bron-bergenholtz-2026">Bergenholtz et al., 2026</a>).</li>
+      </ul>
+      <div class="bewijs"><span>Bewijs</span><span class="chip exp">Experiment</span><span class="chip enq">Enquête of interviews</span><span class="chip prak">Praktijk</span></div>
+      <div class="ksave">
+        <p class="tussenkop">Voor de KSAVE</p>
+        <p>Probleemoriëntatie (aanleiding, doelstelling, onderzoeksvraag) staat nu in periode 3. Begin er in periode 1 mee, in eenvoudige vorm. Laat het daarna elke periode terugkomen. Laat de student vanaf periode 3 de ontwerpkeuzes verantwoorden: welke methode, welke respondenten en bronnen, en wat AI daarbij deed. Maak "een AI-uitkomst controleren" een vaste stap in elke rapportage.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="punt">
+    <div class="punt-kop"><span class="punt-nr">2</span><h3>Eerst zelf doen, dan met AI</h3></div>
+    <div class="punt-romp">
+      <p class="tussenkop">Wat de bronnen laten zien</p>
+      <ul>
+        <li>In een veldexperiment met bijna duizend scholieren stegen de oefencijfers wiskunde met een standaardversie van ChatGPT met 48%. Zonder AI scoorde die groep daarna 17% lager dan leerlingen die nooit AI hadden (<a class="cite" id="c-bastani-2025-1" href="#bron-bastani-2025">Bastani et al., 2025</a>).</li>
+        <li>Bachelorstudenten die met ChatGPT studeerden, scoorden op een onaangekondigde toets na 45 dagen 57,5%. Studenten die op de gewone manier studeerden, haalden 68,5% (<a class="cite" id="c-barcaui-2025-1" href="#bron-barcaui-2025">Barcaui, 2025</a>).</li>
+        <li>Ook in het hoger onderwijs kan ongeleid gebruik schaden. Aan de University of Maryland kregen 2.379 studenten een AI-assistent die meestal in de standaardstand "directe instructie" stond. Hun eindcijfers daalden met 0,37 standaarddeviatie (<a class="cite" id="c-liu-2026-1" href="#bron-liu-2026">Liu et al., 2026</a>, werkdocument).</li>
+        <li>Bij 133 octrooigemachtigden verbeterde AI gemiddeld de kwaliteit van de conceptteksten, vooral van de zwakste. Op een latere toets zonder AI hielden vooral de senioren winst over. Junioren gingen er gemiddeld niet op vooruit (<a class="cite" id="c-autor-2026-1" href="#bron-autor-2026">Autor et al., 2026</a>, werkdocument gefinancierd door Google). De onderzoekers concluderen dat basiskennis nodig is om blijvend van AI te leren.</li>
+        <li>Ethan Mollick ziet dat junior medewerkers AI vaak slechter gebruiken dan ervaren collega's. Ze nemen het snel in gebruik, maar zien niet of een antwoord goed of slecht is. Junioren leerden het vak altijd door het basiswerk te doen, en dat basiswerk gaat nu naar AI (<a class="cite" id="c-sinek-2026-1" href="#bron-sinek-2026">Simon Sinek, 2026</a>).</li>
+        <li>Leidinggevenden en bestuurders in de Nederlandse Innovatie Monitor 2026 verwachten voor junioren een kleiner takenpakket en een sterkere afname van de werkgelegenheid. Onderzoeksleider Henk Volberda: "Het gevaar is dat AI de eerste treden van de carrièreladder wegneemt" (<a class="cite" id="c-uva-2026-1" href="#bron-uva-2026">Universiteit van Amsterdam, 2026</a>). Dan moet de opleiding de basis leggen die de praktijk minder biedt.</li>
+        <li>Karim Lakhani over een BCG-experiment: consultants die het werk helemaal aan AI overlieten, leerden het minst, "omdat ze gestopt zijn met denken". Zijn vuistregel: maak de eerste sommen met de hand en laat de machine daarna de volgende honderd doen (<a class="cite" id="c-svg-2026-1" href="#bron-svg-2026">Silicon Valley Girl, 2026</a>).</li>
+        <li>Uitleg van AI bij een wiskundeopgave hielp het meest als deelnemers de opgave eerst zelf probeerden (<a class="cite" id="c-kumar-2025-1" href="#bron-kumar-2025">Kumar et al., 2025</a>).</li>
+        <li>Begeleid gebruik werkt ook zonder AI door. Aan de TU Berlin kregen 334 studenten vrije toegang tot een AI-tutor. Op een toets zonder AI scoorden ze 0,34 standaarddeviatie hoger dan studenten zonder tutor (<a class="cite" id="c-fischer-2025-1" href="#bron-fischer-2025">Fischer et al., 2025</a>, werkdocument). In Chili verhoogde begeleiding naar tutorgebruik het tentamencijfer econometrie met 0,21 standaarddeviatie (<a class="cite" id="c-gallegos-2026-1" href="#bron-gallegos-2026">Gallegos, 2026</a>, werkdocument).</li>
+      </ul>
+      <div class="bewijs"><span>Bewijs</span><span class="chip exp">Experiment</span><span class="chip twee">Preprint of werkdocument</span><span class="chip enq">Enquête of interviews</span><span class="chip prak">Praktijk</span></div>
+      <p class="let">Kanttekening: de volgorde geldt per onderzoeksstap die om een eigen oordeel vraagt, en een AI-vrije periode is niet nodig. Een AI-tutor die hints gaf in plaats van antwoorden, voorkwam bij <a class="cite" id="c-bastani-2025-2" href="#bron-bastani-2025">Bastani et al. (2025)</a> de schade grotendeels. Een AI-tutor die studenten zelf liet redeneren, leverde Harvard-studenten natuurkunde zelfs meer leerwinst op dan actief leren in de collegezaal. De onderzoekers maten die winst direct na de les (<a class="cite" id="c-kestin-2025-1" href="#bron-kestin-2025">Kestin et al., 2025</a>).</p>
+      <div class="ksave">
+        <p class="tussenkop">Voor de KSAVE</p>
+        <p>Geef elke onderzoeksstap die om een eigen oordeel vraagt een vaste volgorde: eerst zonder AI, dan met AI als tutor of criticus, dan vergelijken. Koppel de eerste stap aan een taak, zoals een eigen onderzoeksvraag of codering inleveren. Een vaste tijdsdrempel, zoals eerst tien minuten zelf lezen, hielp in een experiment niet (<a class="cite" id="c-fischer-2025-2" href="#bron-fischer-2025">Fischer et al., 2025</a>). Sluit af met een korte controle zonder AI. Npuls beschrijft dezelfde volgorde (<a class="cite" id="c-beekman-2025-2" href="#bron-beekman-2025">Beekman et al., 2025</a>), en hieronder staan twee voorbeelden.</p>
+        <ul>
+          <li><strong>Bronnen zoeken (periode 1).</strong> Bij de oriëntatie zoekt de student eerst zelf drie goede, onderling verschillende bronnen over het onderwerp en leert zo kwaliteit herkennen. Daarna geeft de student die set aan AI als voorbeeld, met de opdracht meer bronnen van dezelfde kwaliteit te zoeken en te verwerken (punt 6). De student volgt ook de verwijzingen in de eigen bronnen en vergelijkt het resultaat met een zoektocht in een vakdatabank (<a class="cite" id="c-hirt-2023-1" href="#bron-hirt-2023">Hirt et al., 2023</a>). Tot slot controleert de student of de nieuwe bronnen aan dezelfde eisen voldoen (punt 3).</li>
+          <li><strong>Coderen (periode 2 en 3).</strong> In periode 2 coderen studenten hun brownpapersessie of interview zelf. In periode 3 laten ze AI hetzelfde materiaal coderen en verklaren ze de verschillen. Nu staat "eenvoudige data-analyse met AI (coderen)" in periode 3, terwijl de student nog nooit zelf heeft gecodeerd. Werk met een codeboek en met geanonimiseerde data (punt 5).</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="punt">
+    <div class="punt-kop"><span class="punt-nr">3</span><h3>Controleren wordt een vaste onderzoeksvaardigheid</h3></div>
+    <div class="punt-romp">
+      <p class="tussenkop">Wat de bronnen laten zien</p>
+      <ul>
+        <li>In het bekendste experiment, met 758 BCG-consultants, werkten deelnemers met AI sneller en beter aan taken die AI goed aankan. Bij een taak net buiten dat bereik kwamen ze 19 procentpunt minder vaak tot het goede antwoord. Hun foute adviezen klonken met AI wel overtuigender (<a class="cite" id="c-dellacqua-2026a-1" href="#bron-dellacqua-2026a">Dell'Acqua et al., 2026a</a>). De onderzoekers noemen de grens van wat AI kan grillig. Vooraf zie je niet aan welke kant van die grens een taak valt.</li>
+        <li>In de strategiestudie uit punt 1 vroegen de onderzoekers de taalmodellen ook naar een simulatie die ze niet konden kennen. Vier van de zes verzonnen er zelf een (<a class="cite" id="c-allen-2026-2" href="#bron-allen-2026">Allen &amp; McDonald, 2026</a>).</li>
+        <li>McKinsey-consultants vragen AI bij elk getal om bewijs: bron, onderbouwing en betrouwbaarheidsmarge. Zo neem je volgens hen de rol van beoordelaar en laat je het uitvoeren aan AI (<a class="cite" id="c-mckinsey-2026c-2" href="#bron-mckinsey-2026c">McKinsey &amp; Company, 2026c</a>). Bewijs opvragen is het begin van controle. De student gaat dat bewijs zelf na.</li>
+        <li>Taalmodellen verzinnen nog steeds bronnen. GPT-4o verzon in 2025 een op de vijf referenties, en bijna de helft van de echte referenties bevatte fouten (<a class="cite" id="c-linardon-2025-1" href="#bron-linardon-2025">Linardon et al., 2025</a>). Nieuwe modellen doen dat zonder zoekfunctie nog steeds: GPT-5.3 verzon in maart 2026 27% van de gevraagde referenties (<a class="cite" id="c-seifi-2026-1" href="#bron-seifi-2026">Seifi &amp; Seyfi, 2026</a>).</li>
+        <li>Taalmodellen citeren ook vaak bronnen die de bewering niet dragen. Bij medische vragen werd 50 tot 90% van de antwoorden niet volledig gedragen door de geciteerde bronnen, vooral bij modellen zonder zoekfunctie. Met een webzoekfunctie gold dat nog voor bijna de helft van de antwoorden (<a class="cite" id="c-wu-2025-1" href="#bron-wu-2025">Wu et al., 2025</a>).</li>
+        <li>Gespecialiseerde zoektools missen veel als ze zelfstandig zoeken. Elicit vond 39,5% van de relevante studies, tegen 94,5% voor een gewone zoekstrategie (<a class="cite" id="c-lau-2025-1" href="#bron-lau-2025">Lau &amp; Golder, 2025</a>). Binnen een zoekstrategie van mensen werkt AI als screener juist goed. AI vond 96,7% van de relevante studies, tegen 81,7% bij twee menselijke beoordelaars (<a class="cite" id="c-cao-2025-1" href="#bron-cao-2025">Cao et al., 2025</a>, preprint van de makers).</li>
+      </ul>
+      <div class="bewijs"><span>Bewijs</span><span class="chip exp">Experiment</span><span class="chip twee">Preprint of werkdocument</span><span class="chip prak">Praktijk</span></div>
+      <div class="ksave">
+        <p class="tussenkop">Voor de KSAVE</p>
+        <p>Periode 1 bevat al "begrijpen of een bron een mening of een feit is". Breid dat uit naar AI-uitkomsten als apart soort bron: elke bewering gaat terug naar een bron die de student zelf heeft gelezen. Controleren betekent twee dingen: bestaat de bron, en draagt die bron de bewering? Triangulatie staat nu pas in cluster F. Een eenvoudige vorm, één uitkomst langs twee wegen controleren, past al in jaar 1.</p>
+        <p>Of een bron bestaat, kunnen tools steeds beter nagaan. Leg het accent daarom op de vraag of de bron de bewering draagt, en op volledigheid: welke bronnen ontbreken? Laat de student eerst zelf een zoekstrategie en inclusiecriteria opstellen. Daarna mag AI screenen.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="punt">
+    <div class="punt-kop"><span class="punt-nr">4</span><h3>Het eindproduct zegt minder over wat de student kan</h3></div>
+    <div class="punt-romp">
+      <p class="tussenkop">Wat de bronnen laten zien</p>
+      <ul>
+        <li>In een blinde test bleef 94% van de volledig door AI geschreven tentamens onopgemerkt. Die tentamens scoorden in vier van de vijf vakken hoger dan het werk van echte studenten. In het laatstejaarsvak scoorden ze lager (<a class="cite" id="c-scarfe-2024-1" href="#bron-scarfe-2024">Scarfe et al., 2024</a>).</li>
+        <li>In het labexperiment uit punt 1 verkleinde AI de verschillen tussen sterke en zwakke deelnemers, vooral doordat zwakke deelnemers vooruitgingen (<a class="cite" id="c-bergenholtz-2026-2" href="#bron-bergenholtz-2026">Bergenholtz et al., 2026</a>). Een verzorgd rapport zegt dus minder over het onderliggende kunnen dan vroeger.</li>
+        <li>Mensen schatten hun eigen werk met AI slecht in, meestal te hoog. Deelnemers die redeneeropgaven met AI oplosten, scoorden iets beter, maar schatten hun score ongeveer vier punten te hoog in (<a class="cite" id="c-fernandes-2026-1" href="#bron-fernandes-2026">Fernandes et al., 2026</a>). Ervaren softwareontwikkelaars die in 2025 met AI 19% trager werkten, dachten dat ze 20% sneller waren (<a class="cite" id="c-becker-2025-1" href="#bron-becker-2025">Becker et al., 2025</a>, preprint). METR, de organisatie achter die studie, noemt de vertraging inmiddels verouderd (<a class="cite" id="c-metr-2026-1" href="#bron-metr-2026">METR, 2026</a>). In het P&amp;G-experiment onderschatten deelnemers hun werk juist (<a class="cite" id="c-dellacqua-2026b-2" href="#bron-dellacqua-2026b">Dell'Acqua et al., 2026b</a>).</li>
+        <li>Volledig door AI geschreven tekst is met de beste detector inmiddels goed te herkennen (<a class="cite" id="c-jabarian-2025-1" href="#bron-jabarian-2025">Jabarian &amp; Imas, 2025</a>, werkdocument). Voor gemengd of bewerkt werk en voor teksten van niet-moedertaalschrijvers is dat niet aangetoond. Het blijvende probleem is validiteit: als AI mag meewerken, meet een rapport het werk van student en AI samen.</li>
+      </ul>
+      <div class="bewijs"><span>Bewijs</span><span class="chip exp">Experiment</span><span class="chip obs">Observationeel onderzoek</span><span class="chip twee">Preprint of werkdocument</span><span class="chip data">Beleid of richtlijn</span></div>
+      <div class="ksave">
+        <p class="tussenkop">Voor de KSAVE</p>
+        <p>Dit punt raakt vooral de toetsing. Laat studenten al in jaar 1 en 2 mondeling of ter plekke hun analyse uitleggen en narekenen. Dan zien we tekorten op tijd, en niet pas bij het afstuderen. De HAN-toolkit noemt het mondeling en het criteriumgericht interview AI-bestendig (<a class="cite" id="c-themagroep-2025-2" href="#bron-themagroep-2025">Themagroep AI – Toetsing, 2025</a>). Mondeling toetsen kost wel docenttijd en vraagt kalibratie van beoordelaars en een oefenmoment vooraf (paragraaf 5 en 6).</p>
+        <p>Een schriftelijke reflectie op eigen AI-gebruik meet weinig als losse toets. Aan een Britse business school vulde 74% van de studenten de verplichte AI-verklaring niet in (<a class="cite" id="c-gonsalves-2025-1" href="#bron-gonsalves-2025">Gonsalves, 2025</a>). Koppel de verantwoording daarom aan een mondelinge check.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="punt">
+    <div class="punt-kop"><span class="punt-nr">5</span><h3>Methodekennis wordt stuurkennis</h3></div>
+    <div class="punt-romp">
+      <p class="tussenkop">Wat de bronnen laten zien</p>
+      <ul>
+        <li>Hamel Husain, specialist in het evalueren van AI-toepassingen, laat AI fouten indelen met open en axiaal coderen. Hij gebruikt die termen met opzet: AI herkent de methode uit de sociale wetenschappen en volgt dan het juiste schema (<a class="cite" id="c-yang-2025-1" href="#bron-yang-2025">Peter Yang, 2025</a>). Een student die de methode kent, kan AI dus beter aansturen.</li>
+        <li>Met een helder codeboek komt AI-codering redelijk tot goed overeen met menselijke codeurs. Een Nederlandse studie met 38 interviews en een lokaal draaiend taalmodel haalde op een eenvoudige deeltaak een overeenstemming van 0,68 (Cohens kappa). Op de realistische taak verschilde de nauwkeurigheid sterk per code (<a class="cite" id="c-balt-2025-1" href="#bron-balt-2025">Balt et al., 2025</a>). Er is ook verzet: 419 kwalitatieve onderzoekers wijzen AI af voor reflexieve thematische analyse (<a class="cite" id="c-jowsey-2026-1" href="#bron-jowsey-2026">Jowsey et al., 2026</a>).</li>
+        <li>Bij een eenvoudige deductieve taak, de politieke kleur van berichten bepalen, codeerde GPT-4 nauwkeuriger dan expertcodeurs (<a class="cite" id="c-tornberg-2025-1" href="#bron-tornberg-2025">Törnberg, 2025</a>). Toch leidde AI-codering in een grote test bij ongeveer 31% van de hypothesen tot een verkeerde conclusie (<a class="cite" id="c-baumann-2025-1" href="#bron-baumann-2025">Baumann et al., 2025</a>, preprint). Kleine wijzigingen in de opdracht veranderden de uitkomst. Menselijke controle blijft dus nodig, omdat de uitkomst onstabiel is.</li>
+        <li>Er komen nieuwe onderzoeksinstrumenten bij. Toyota gebruikt een deep-research-tool: een AI-agent die zelfstandig interne bronnen doorzoekt om R&amp;D-vragen te beantwoorden (<a class="cite" id="c-langchain-2026-1" href="#bron-langchain-2026">LangChain, 2026</a>).</li>
+        <li>Synthetische respondenten treffen gemiddelden goed, maar hebben te weinig spreiding en veranderen met kleine wijzigingen in de vraag (<a class="cite" id="c-bisbee-2024-1" href="#bron-bisbee-2024">Bisbee et al., 2024</a>). Marketingonderzoekers adviseren ze alleen voor het testen van vragenlijsten en pilots (<a class="cite" id="c-sarstedt-2024-1" href="#bron-sarstedt-2024">Sarstedt et al., 2024</a>). Een AI-agent die een onderzoeker zelf bouwde, doorstond bovendien 99,8% van de standaard-aandachtscontroles in online enquêtes (<a class="cite" id="c-westwood-2025-1" href="#bron-westwood-2025">Westwood, 2025</a>). Hoe vaak zulke agents echte enquêtes invullen, is nog onduidelijk.</li>
+        <li>Ideeën die mens en AI samen bedachten, waren gemiddeld beter uitgewerkt dan die van een groep mensen, maar minder origineel (<a class="cite" id="c-boussioux-2024-1" href="#bron-boussioux-2024">Boussioux et al., 2024</a>). Dat telt bij ontwerpen en design thinking.</li>
+      </ul>
+      <div class="bewijs"><span>Bewijs</span><span class="chip exp">Experiment</span><span class="chip twee">Preprint of werkdocument</span><span class="chip prak">Praktijk</span></div>
+      <div class="ksave">
+        <p class="tussenkop">Voor de KSAVE</p>
+        <p>De bestaande methodeonderwerpen blijven must have: kwalitatief en kwantitatief onderzoek, coderen, validiteit en basisstatistiek. Ze krijgen er een functie bij, want met die kennis stuurt en controleert de student AI. AI codeert soms even goed als een mens. De student valideert dat met een eigen gecodeerde controleset en stelt vast wanneer AI gelijk heeft. Voeg twee onderwerpen toe:</p>
+        <ul>
+          <li><strong>Periode 1 en cluster C:</strong> hoe AI-zoekmachines en deep-research-tools werken en waar ze tekortschieten.</li>
+          <li><strong>Cluster E:</strong> synthetische data en gesimuleerde respondenten kritisch beoordelen en alleen verkennend gebruiken: vragenlijsten testen en hypothesen kiezen, zonder effectgroottes of spreiding te rapporteren.</li>
+        </ul>
+        <p>Kies voor de AI-vergelijking in periode 3 een aanpak met een codeboek. Interviewdata uit organisaties horen niet in een openbare chatbot. Werk met geanonimiseerde data of een lokaal model.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="punt">
+    <div class="punt-kop"><span class="punt-nr">6</span><h3>Opdracht geven en bijsturen tijdens de uitvoering</h3></div>
+    <div class="punt-romp">
+      <p class="tussenkop">Wat de bronnen laten zien</p>
+      <ul>
+        <li>Mollick vindt trucjes voor <i>prompt engineering</i> achterhaald. Iemand die een mens een goede opdracht kan geven, kan AI ook een goede opdracht geven (<a class="cite" id="c-sinek-2026-2" href="#bron-sinek-2026">Simon Sinek, 2026</a>).</li>
+        <li>McKinsey werkt met vijf gewoonten:<ol><li>Geef een rol en een succescriterium.</li><li>Zeg welke bronnen voorgaan.</li><li>Laat met een voorbeeld zien hoe de uitkomst eruit moet zien.</li><li>Vraag bij elk getal het bewijs.</li><li>Laat AI eerst vragen stellen.</li></ol>"Goed prompten is gedisciplineerd denken in tekstvorm" (<a class="cite" id="c-mckinsey-2026c-3" href="#bron-mckinsey-2026c">McKinsey &amp; Company, 2026c</a>, vertaald).</li>
+        <li>Een expertrol geven, de eerste gewoonte van McKinsey, maakt de antwoorden van taalmodellen niet nauwkeuriger (<a class="cite" id="c-basil-2025-1" href="#bron-basil-2025">Basil et al., 2025</a>, preprint). Bijsturen na het zien van de uitkomst loont wel. Bij een beeldtaak kwam ongeveer de helft van de winst van een beter model van gebruikers die hun opdracht aanpasten (<a class="cite" id="c-jahani-2025-1" href="#bron-jahani-2025">Jahani et al., 2025</a>).</li>
+        <li>Toezicht verslapt. Een team bij Y Combinator liet AI eerst een plan voorstellen en controleerde dat plan voordat AI het uitvoerde. Binnen een paar maanden werd die controle een formaliteit, zegt het team zelf (<a class="cite" id="c-yc-2026-1" href="#bron-yc-2026">Y Combinator, 2026</a>).</li>
+        <li>Bij McKinsey zette een AI-agent een sarcastische opmerking uit een vergadering op de actielijst van de CEO. Iemand las de lijst nog na en haalde de fout eruit. McKinsey werkt met vaste controlemomenten: vooraf ligt vast wanneer een controle plaatsvindt en wie die doet (<a class="cite" id="c-mckinsey-2026b-1" href="#bron-mckinsey-2026b">McKinsey &amp; Company, 2026b</a>).</li>
+        <li>Ook bij ervaren professionals zijn er signalen dat de waakzaamheid daalt. Artsen die drie maanden met AI hadden gewerkt, vonden daarna zonder AI minder voorstadia van darmkanker: 22,4% tegen eerder 28,4% (<a class="cite" id="c-budzyn-2025-1" href="#bron-budzyn-2025">Budzyń et al., 2025</a>). Dat was een observationele studie in een periode met bijna twee keer zoveel colonoscopieën. Twee latere prospectieve studies, in Japan (<a class="cite" id="c-okumura-2026-1" href="#bron-okumura-2026">Okumura et al., 2026</a>) en Noorwegen (<a class="cite" id="c-pedersen-2026-1" href="#bron-pedersen-2026">Pedersen et al., 2026</a>), vonden geen daling.</li>
+        <li>Econoom Erik Brynjolfsson verwacht dat bijna iedereen straks een groep AI-agents aanstuurt. Volgens hem doen mensen het goed als ze die agents een duidelijke richting geven en hun werk kunnen beoordelen (<a class="cite" id="c-mckinsey-2026a-1" href="#bron-mckinsey-2026a">McKinsey &amp; Company, 2026a</a>).</li>
+      </ul>
+      <div class="bewijs"><span>Bewijs</span><span class="chip exp">Experiment</span><span class="chip obs">Observationeel onderzoek</span><span class="chip twee">Preprint of werkdocument</span><span class="chip prak">Praktijk</span></div>
+      <div class="ksave">
+        <p class="tussenkop">Voor de KSAVE</p>
+        <p>"Prompting leren" staat nu als los onderwerp in periode 4. Wij zien het als dezelfde vaardigheid als een onderzoeksdoel en -vraag formuleren. Voeg de twee samen. Het bewijs steunt vooral bijsturen en beoordelen na de eerste uitkomst. Begin ermee in periode 1. Neem in periode 4 controlemomenten op in het onderzoeksplan: wanneer kijkt de student na wat AI heeft gedaan, en hoe stuurt de student bij?</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="punt">
+    <div class="punt-kop"><span class="punt-nr">7</span><h3>Stakeholders en communicatie blijven bij de student</h3></div>
+    <div class="punt-romp">
+      <p class="tussenkop">Wat de bronnen laten zien</p>
+      <ul>
+        <li>Volgens een rapport van het World Economic Forum en PwC groeit in sectoren met veel AI de vraag naar menselijke vaardigheden twee keer zo snel. Het gaat om oordeelsvermogen, problemen oplossen, kritisch denken en relaties opbouwen (<a class="cite" id="c-wef-2026-1" href="#bron-wef-2026">World Economic Forum, 2026</a>).</li>
+        <li>AI-agents begrijpen geen sociale context, merkt het team van Y Combinator. Een collega voelt aan welke informatie je met wie kunt delen. Een AI-agent doet dat niet (<a class="cite" id="c-yc-2026-2" href="#bron-yc-2026">Y Combinator, 2026</a>).</li>
+        <li>Bestuurders in de interviewstudie van <a class="cite" id="c-bevilacqua-2025-2" href="#bron-bevilacqua-2025">Bevilacqua et al. (2025)</a> noemen verbinden op meerdere niveaus een kernvaardigheid: middenmanagers meenemen, en relaties opbouwen met klanten, leveranciers en kennisinstellingen.</li>
+        <li>AI kan wel korte, gestructureerde interviews afnemen. Een AI-interviewer scoorde ongeveer zo goed als een gemiddelde menselijke expert (<a class="cite" id="c-geiecke-2025-1" href="#bron-geiecke-2025">Geiecke &amp; Jaravel, 2025</a>, werkdocument). In een experiment met Duitse studenten deed een AI-interviewer het ongeveer even goed als een medestudent. De AI vroeg slechter door. De studenten luisterden minder actief (<a class="cite" id="c-wuttke-2025-1" href="#bron-wuttke-2025">Wuttke et al., 2025</a>).</li>
+        <li>Zichtbaar AI-gebruik kost vertrouwen. In vier experimenten met ruim 4.400 deelnemers vonden mensen iemand die AI gebruikte minder competent en minder gemotiveerd (<a class="cite" id="c-reif-2025-1" href="#bron-reif-2025">Reif et al., 2025</a>).</li>
+      </ul>
+      <div class="bewijs"><span>Bewijs</span><span class="chip exp">Experiment</span><span class="chip enq">Enquête of interviews</span><span class="chip twee">Preprint of werkdocument</span><span class="chip prak">Praktijk</span></div>
+      <p class="let">Kanttekening: in het P&amp;G-experiment haalden mensen die alleen met AI werkten hetzelfde niveau als teams zonder AI (<a class="cite" id="c-dellacqua-2026b-3" href="#bron-dellacqua-2026b">Dell'Acqua et al., 2026b</a>). AI neemt dus een deel van de samenwerking binnen een team over. Het contact met mensen buiten het team, zoals opdrachtgever en respondenten, onderzocht die studie niet.</p>
+      <div class="ksave">
+        <p class="tussenkop">Voor de KSAVE</p>
+        <p>De KSAVE heeft al veel onderdelen waarin de student met mensen werkt: de brownpapersessie begeleiden, interviews afnemen, participatief actieonderzoek en stakeholdersbewustzijn bij professionele ontwikkeling. Houd die onderdelen als must have. Bij interviews verschuift het accent naar het interviewprotocol ontwerpen, doorvragen en de kwaliteit van interviews beoordelen. Het relationele werk met opdrachtgever en respondenten kan AI het minst overnemen, dus dat krijgt meer gewicht. In cluster D komt erbij dat de student de uitkomsten in gesprek teruglegt bij opdrachtgever en respondenten.</p>
+        <p>Een voorbeeld uit het managementonderwijs: AI stelt een functieomschrijving op, en studenten verbeteren die met gesprekken met echte medewerkers (<a class="cite" id="c-walker-2025-1" href="#bron-walker-2025">Walker &amp; Larson, 2025</a>).</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section aria-labelledby="s3">
+  <h2 id="s3"><span class="nr">3</span>Voorstel per periode en cluster</h2>
+  <p>De tabel volgt de indeling van de KSAVE. Een plusteken betekent: toevoegen. In de laatste kolom staat of wij het onderwerp als must have zien. Bij twijfel staat erbij waarom.</p>
+  <div class="tabelvak" role="region" aria-label="Voorstel per periode en cluster" tabindex="0">
+    <table>
+      <thead>
+        <tr><th>Waar</th><th>Staat nu in de KSAVE</th><th>Voorstel</th><th>Punt</th><th>Must have?</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A · P1</td>
+          <td class="nu">Bronnen vinden en beoordelen, gebruik van AI en APA, mening of feit</td>
+          <td><ul><li>+ AI-uitkomsten beoordelen als apart soort bron: elke bewering gaat terug naar een gelezen bron</li><li>+ Een eenvoudige onderzoeksvraag bij een aanleiding formuleren, voor een mens en voor AI</li><li>+ Eerst zelf drie goede bronnen vinden. Daarna die set aan AI geven als voorbeeld om meer bronnen van dezelfde kwaliteit te zoeken en te verwerken</li><li>+ Verwijzingen in de eigen bronnen volgen en vergelijken met een zoektocht in een vakdatabank</li></ul></td>
+          <td class="pt">1, 2, 3, 6</td>
+          <td><span class="ja">Ja</span></td>
+        </tr>
+        <tr>
+          <td>A · P2</td>
+          <td class="nu">Brownpapersessie, kwalitatieve data verwerken</td>
+          <td><ul><li>+ Kwalitatieve data eerst zelf coderen, zonder AI</li></ul></td>
+          <td class="pt">2</td>
+          <td><span class="ja">Ja</span></td>
+        </tr>
+        <tr>
+          <td>A · P3</td>
+          <td class="nu">Probleemoriëntatie, eenvoudige data-analyse met AI (coderen)</td>
+          <td><ul><li>AI codeert hetzelfde materiaal als in P2, met een codeboek en geanonimiseerde data. De student vergelijkt, verklaart de verschillen en stelt vast waar AI gelijk heeft</li><li>Probleemoriëntatie bouwt voort op P1 en P2</li><li>+ Ontwerpkeuzes verantwoorden: methode, respondenten, bronnen en de rol van AI</li></ul></td>
+          <td class="pt">1, 2</td>
+          <td><span class="ja">Ja</span></td>
+        </tr>
+        <tr>
+          <td>A · P4</td>
+          <td class="nu">Prompting leren, PowerBI met AI, basisstatistiek</td>
+          <td><ul><li>"Prompting leren" wordt: een analyseopdracht voor AI formuleren (taak, succescriterium, bronnen, gewenste output, bewijs bij elk getal)</li><li>+ De student rekent een uitkomst uit PowerBI of AI zelf na</li><li>+ Controlemomenten in het onderzoeksplan: wanneer kijkt de student na wat AI deed, en hoe stuurt de student bij</li></ul></td>
+          <td class="pt">3, 6</td>
+          <td><span class="ja">Ja</span></td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td class="nu">Vervolg datavaardigheden, argumenteren en logica</td>
+          <td><ul><li>+ Werking en grenzen van AI-zoekmachines en deep-research-tools</li><li>+ Vakdatabanken naast AI-zoektools gebruiken</li><li>+ Zelf een zoekstrategie en inclusiecriteria opstellen, en AI daarna laten screenen</li><li>+ Eenvoudige triangulatie en bewustzijn van eigen bias (nu in F)</li></ul></td>
+          <td class="pt">3, 5</td>
+          <td><span class="ja">Ja</span><span class="toelichting">Plek afstemmen met AI, data en digitale vaardigheden</span></td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td class="nu">Casestudy, evidence based practices, participatief actieonderzoek</td>
+          <td><ul><li>+ In het onderzoeksrapport verantwoorden wat AI deed en hoe de student dat heeft gecontroleerd, en dat mondeling verdedigen</li><li>+ Uitkomsten in gesprek terugleggen bij opdrachtgever en respondenten</li><li>+ Een interviewprotocol ontwerpen en de kwaliteit van interviews beoordelen</li></ul></td>
+          <td class="pt">3, 4, 7</td>
+          <td><span class="ja">Ja</span></td>
+        </tr>
+        <tr>
+          <td>E</td>
+          <td class="nu">Design thinking, bots maken, procesmining, causaal mappen</td>
+          <td><ul><li>"Bots maken" wordt: AI-agents maken</li><li>+ Synthetische data en gesimuleerde respondenten kennen, kritisch beoordelen en alleen verkennend gebruiken</li><li>+ Bij ontwerpen AI bewust laten zoeken naar ideeën die afwijken van het gemiddelde</li></ul></td>
+          <td class="pt">5</td>
+          <td><span class="ja">Ja</span><span class="toelichting">Compact: ruim bewijs over de grenzen</span></td>
+        </tr>
+        <tr>
+          <td>F</td>
+          <td class="nu">Triangulatie en evidence based management, bewustzijn van eigen bias</td>
+          <td><ul><li>Verdieping van wat in A tot en met D is gelegd</li><li>+ Mondelinge verantwoording van de analyse, met kalibratie van beoordelaars en een oefenmoment vooraf</li></ul></td>
+          <td class="pt">4</td>
+          <td><span class="ja">Ja</span><span class="toelichting">Toetsvorm vraagt afstemming</span></td>
+        </tr>
+        <tr>
+          <td>Eind jaar 2</td>
+          <td class="nu">Nog niet opgenomen</td>
+          <td><ul><li>+ Onderzoekend vermogen opnemen in de formatieve diagnostische toetsen voor het basisniveau (CuCo-besluit 9 december 2025). Een deel van die toetsing gaat zonder AI</li></ul></td>
+          <td class="pt">2, 4</td>
+          <td><span class="twijfel">Twijfel</span><span class="toelichting">Voorstel aan de CuCo</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="bijschrift">P = periode. De kolommen "zit wel/niet in het curriculum" vullen we pas in na overleg met de docenten van jaar 1 en 2.</p>
+</section>
+
+<section aria-labelledby="s4">
+  <h2 id="s4"><span class="nr">4</span>Wat dit doet voor de afstudeerfase</h2>
+  <p>Onze lezing van de bronnen: twee oorzaken zorgen ervoor dat we tekorten pas bij het afstuderen ontdekken.</p>
+  <ul>
+    <li><strong>Basisvaardigheden staan laat in de KSAVE.</strong> Probleemoriëntatie komt in periode 3, triangulatie en bewustzijn van eigen bias in cluster F. De afstudeerfase is dan de eerste plek waar de student alles tegelijk en zelfstandig moet doen.</li>
+    <li><strong>AI verbergt tekorten.</strong> In jaar 1 en 2 levert een student met AI verzorgde producten op, ook als de vaardigheid ontbreekt (punt 4). Bij het afstuderen moet de student een eigen onderzoek opzetten en verdedigen. Dan komt het tekort boven.</li>
+  </ul>
+  <p>De voorstellen pakken beide aan: eerder beginnen, eerst zonder AI oefenen en vaker toetsen wat de student zonder AI kan. Lukt dat, dan kan cluster F zich op verdieping richten en hoeft het de basis niet meer te repareren.</p>
+  <p>Dat eerder beginnen helpt, is een ontwerpkeuze op basis van wat afstudeerbegeleiders zien. Claude vond geen onderzoek dat een vroege onderzoekslijn vergelijkt met training in de afstudeerfase. Bij 952 Duitse studenten groeide onderzoekscompetentie het meest in cursussen die op echt onderzoek leken, maar het effect was klein (<a class="cite" id="c-wessels-2021-1" href="#bron-wessels-2021">Wessels et al., 2021</a>). Dat pleit voor vaker kleine, echte onderzoeken in jaar 1 en 2.</p>
+  <p>Het landelijke afstudeerprotocol steunt het voorstel om de basis vóór het afstuderen te toetsen. Eén prestatie is zelden representatief. Het protocol noemt het mogelijk om pas met afstuderen te beginnen als de eerdere beoordelingen op orde zijn (<a class="cite" id="c-andriessen-2017-1" href="#bron-andriessen-2017">Andriessen et al., 2017</a>).</p>
+</section>
+
+<section aria-labelledby="s5">
+  <h2 id="s5"><span class="nr">5</span>Grenzen van deze verkenning</h2>
+  <ul>
+    <li>De wiki gaat vooral over het werkveld. Het literatuuronderzoek vult dat aan met onderwijsonderzoek uit 2024 tot en met 2026.</li>
+    <li>Geen enkele studie test de volgorde zonder AI, met AI en vergelijken in het hbo. Ook het leereffect van zelf coderen naast AI-codering en van AI voeden met eigen bronnen is niet onderzocht.</li>
+    <li>Of probleemformulering op langere termijn slijt, heeft niemand gemeten. Over de validiteit en de werklast van mondelinge toetsen in het AI-tijdperk is weinig bekend.</li>
+    <li>Twee veelgenoemde bronnen gebruiken we bewust niet. Een meta-analyse over ChatGPT en leerprestaties is in april 2026 ingetrokken. De MIT-studie "Your brain on ChatGPT" is een kleine preprint met methodologische kritiek.</li>
+        <li>Het sterkste bewijs komt uit veldexperimenten, zoals <a class="cite" id="c-bastani-2025-3" href="#bron-bastani-2025">Bastani et al. (2025)</a> bij scholieren en die van Dell'Acqua et al. (<a class="cite" id="c-dellacqua-2026a-2" href="#bron-dellacqua-2026a">2026a</a>, <a class="cite" id="c-dellacqua-2026b-4" href="#bron-dellacqua-2026b">2026b</a>) bij consultants. <a class="cite" id="c-bergenholtz-2026-3" href="#bron-bergenholtz-2026">Bergenholtz et al. (2026)</a> is een kort labexperiment. Preprints en werkdocumenten staan als zodanig gelabeld.</li>
+    <li>Het bewijs dat begeleid AI-gebruik ook zonder AI winst oplevert, is jong. Het bestaat vooral uit werkdocumenten en preprints, en de meeste studies meten kort na de les. Dit beeld kan binnen een jaar verschuiven, in beide richtingen.</li>
+    <li>De grens van wat AI kan, schuift elk jaar op. Ook de foutcijfers van AI-tools verouderen snel. Wat nu een must have is, kan over twee jaar anders liggen. Dat pleit voor de jaarlijkse herijking die de CuCo al heeft afgesproken.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="s6">
+  <h2 id="s6"><span class="nr">6</span>Wat vraagt dit van docenten?</h2>
+  <p><strong>Een bekend patroon.</strong> AI wordt gemeengoed, zoals eerder de rekenmachine en het internet. Bij de rekenmachine vonden 79 studies over het geheel geen schade. De uitzondering was langdurig gebruik in het jaar waarin leerlingen basisrekenen leren (<a class="cite" id="c-hembree-1986-1" href="#bron-hembree-1986">Hembree &amp; Dessart, 1986</a>). Het onderwijs koos uiteindelijk voor een volgorde, met eerst zelf rekenen en dan de rekenmachine. Het examenreglement verbiedt nog steeds hulpmiddelen die de vaardigheden uit de syllabus overbodig maken (<a class="cite" id="c-cvte-zd-1" href="#bron-cvte-zd">College voor Toetsen en Examens, z.d.</a>).</p>
+  <p>Het internet maakte bronnen vinden makkelijk. Bronnen beoordelen moest het onderwijs daarna apart aanleren, en dat lukt nog steeds niet goed. In 2018 en 2019 kreeg 90% van 3.446 Amerikaanse scholieren geen punten op vier van zes taken voor bronbeoordeling (<a class="cite" id="c-breakstone-2021-1" href="#bron-breakstone-2021">Breakstone et al., 2021</a>). Bij AI moet het onderwijs zich sneller aanpassen. AI neemt meer stappen over en verspreidt zich sneller. Na twee jaar gebruikte 39,5% van de Amerikaanse volwassenen generatieve AI, tegen 20% bij het internet (<a class="cite" id="c-bick-2024-1" href="#bron-bick-2024">Bick et al., 2024</a>, werkdocument).</p>
+  <p><strong>Docenten in het proces.</strong> Een eindproduct laat minder zien wat de student zelf kan zodra AI mocht meewerken (punt 4). Docenten volgen het onderzoeksproces daarom op een paar vaste momenten. Ze doen het controleren van AI-uitkomsten zelf voor, scheiden begeleiden van beoordelen en bouwen hun begeleiding af richting de afstudeerfase. Studenten die aan echt onderzoek willen meedoen, verbinden wij met lectoraatsprojecten.</p>
+  <p><strong>Onderzoek houdt docenten bij.</strong> Bedrijfskunde leidt op voor organisaties die in hoog tempo automatiseren, en dat begon vóór ChatGPT. In operations management bepalen data en algoritmes al jaren hoe organisaties hun processen ontwerpen, beheren en analyseren, bijvoorbeeld met robotic process automation (RPA) en procesmining. De KSAVE noemt procesmining al in cluster E.</p>
+  <p>Generatieve AI versnelt dat. In 88% van de Nederlandse organisaties gebruikt de gemiddelde werknemer wekelijks AI, gemiddeld 2,9 uur per week. Dat blijkt uit de Nederlandse Innovatie Monitor 2026 (<a class="cite" id="c-uva-2026-2" href="#bron-uva-2026">Universiteit van Amsterdam, 2026</a>). Organisaties zetten AI vooral in voor tekst- en kantoorwerk, en grote veranderingen in productie en bedrijfsmodellen moeten volgens de onderzoekers grotendeels nog komen. Dat is het terrein van Bedrijfskunde, en daarom vinden wij dat docenten zelf onderzoek moeten doen in die praktijk. De student ziet dan hoe een onderzoeker werkt, en de docent blijft bij in het vak.</p>
+  <p><strong>Tijd en ruimte.</strong> Een meta-analyse vond vrijwel geen verband (r = 0,06) tussen de onderzoeksprestaties van universitaire docenten en de kwaliteit van hun onderwijs (<a class="cite" id="c-hattie-1996-1" href="#bron-hattie-1996">Hattie &amp; Marsh, 1996</a>). Die koppeling ontstaat dus niet vanzelf. Of praktijkgericht onderzoek de inhoud van het onderwijs actueel houdt, toetste die meta-analyse niet. Ook procesbegeleiding kost tijd, want programmatisch toetsen geeft veel werk en een dubbele rol als coach en beoordelaar (<a class="cite" id="c-schut-2021-1" href="#bron-schut-2021">Schut et al., 2021</a>).</p>
+  <p>Die tijd is er nu weinig. Docent-onderzoekers in het hbo hebben gemiddeld 0,33 fte onderzoekstijd, en die tijd daalde in 2024 (<a class="cite" id="c-rathenau-2026-1" href="#bron-rathenau-2026">Rathenau Instituut, 2026</a>). De helft van de hbo-docenten werkt meer uren aan onderwijs dan het contract voorschrijft (<a class="cite" id="c-inspectie-2024-1" href="#bron-inspectie-2024">Inspectie van het Onderwijs, 2024</a>).</p>
+  <p class="let">Voorstel aan het opleidingsmanagement: neem onderzoekstijd voor docenten op als randvoorwaarde bij de herijking, bijvoorbeeld via deelname aan lectoraatsprojecten. Raam vooraf de werklast van procesmomenten en mondelinge checks. Deze punten vallen buiten de KSAVE, want de KSAVE beschrijft wat studenten moeten kunnen.</p>
+</section>
+
+<section aria-labelledby="s7">
+  <h2 id="s7"><span class="nr">7</span>Vervolg</h2>
+  <ol>
+    <li>De zeven punten en de tabel samen aanscherpen.</li>
+    <li>Met voltijd- en deeltijddocenten nagaan wat al in jaar 1 en 2 zit.</li>
+    <li>Overlap afstemmen met Arthur (AI, data en digitale vaardigheden). Prompting, PowerBI en AI-ethiek staan ook in dat onderdeel.</li>
+    <li>Punt 7 afstemmen met de collega's van professionele ontwikkeling en Nederlands. Stakeholdersbewustzijn en communicatie vallen onder hun onderdelen.</li>
+    <li>Bij het uitwerken van de toetsing (punt 4) de Npuls-handreikingen en de HAN-toolkit gebruiken.</li>
+    <li>Het voorstel over onderzoekstijd en werklast (paragraaf 6) bespreken met het opleidingsmanagement.</li>
+    <li>De diagnostische toets eind jaar 2 bij opeenvolgende cohorten gebruiken om zelf te meten wat de nieuwe lijn oplevert.</li>
+    <li>Uiterlijk 14 december verwerken in het KSAVE-document.</li>
+  </ol>
+</section>
+
+<section class="bronnen" aria-labelledby="s8">
+  <h2 id="s8"><span class="nr">8</span>Bronnen</h2>
+  <p id="bron-allen-2026">Allen, R. T., &amp; McDonald, R. M. (2026). How well can AI do strategy? Empirical benchmarking using strategy simulations. <i>Strategy Science, 11</i>(1), 93–117. <a href="https://doi.org/10.1287/stsc.2025.0444">https://doi.org/10.1287/stsc.2025.0444</a><span class="terug">Geciteerd in: <a href="#c-allen-2026-1">punt 1</a>, <a href="#c-allen-2026-2">punt 3</a></span></p>
+  <p id="bron-andriessen-2017">Andriessen, D., Sluijsmans, D., Snel, M., &amp; Jacobs, A. (2017). <i>Protocol verbeteren en verantwoorden van afstuderen in het hbo 2.0</i>. Vereniging Hogescholen. <a href="https://www.han.nl/artikelen/2020/12/han-toetsevent-2019-blijf-leren-over-toetsen/2017_protocol_verbeteren_en_verantwoorden_van_afstuderen_in_het_hbo_2.0.pdf">https://www.han.nl/artikelen/2020/12/han-toetsevent-2019-blijf-leren-over-toetsen/2017_protocol_verbeteren_en_verantwoorden_van_afstuderen_in_het_hbo_2.0.pdf</a><span class="terug">Geciteerd in: <a href="#c-andriessen-2017-1">§4</a></span></p>
+  <p id="bron-autor-2026">Autor, D., Rodchenko, T., Martin, J., Iscenko, Z., Strand, S., Pearl, D., &amp; Ferere, M. (2026). <i>Does AI assistance enhance or erode expertise? Evidence from a three-month field experiment in patent drafting</i> (NBER Working Paper No. 35720). National Bureau of Economic Research. <a href="https://doi.org/10.3386/w35720">https://doi.org/10.3386/w35720</a><span class="terug">Geciteerd in: <a href="#c-autor-2026-1">punt 2</a></span></p>
+  <p id="bron-balt-2025">Balt, E., Salmi, S., Bhulai, S., Vrinzen, S., Eikelenboom, M., Gilissen, R., Creemers, D., Popma, A., &amp; Mérelle, S. (2025). Deductively coding psychosocial autopsy interview data using a few-shot learning large language model. <i>Frontiers in Public Health, 13</i>, 1512537. <a href="https://doi.org/10.3389/fpubh.2025.1512537">https://doi.org/10.3389/fpubh.2025.1512537</a><span class="terug">Geciteerd in: <a href="#c-balt-2025-1">punt 5</a></span></p>
+  <p id="bron-barcaui-2025">Barcaui, A. (2025). ChatGPT as a cognitive crutch: Evidence from a randomized controlled trial on knowledge retention. <i>Social Sciences &amp; Humanities Open, 12</i>, 102287. <a href="https://doi.org/10.1016/j.ssaho.2025.102287">https://doi.org/10.1016/j.ssaho.2025.102287</a><span class="terug">Geciteerd in: <a href="#c-barcaui-2025-1">punt 2</a></span></p>
+  <p id="bron-basil-2025">Basil, S., Shapiro, I., Shapiro, D., Mollick, E., Mollick, L., &amp; Meincke, L. (2025). <i>Prompting science report 4: Playing pretend: Expert personas don’t improve factual accuracy</i> (arXiv:2512.05858) [Preprint]. arXiv. <a href="https://arxiv.org/abs/2512.05858">https://arxiv.org/abs/2512.05858</a><span class="terug">Geciteerd in: <a href="#c-basil-2025-1">punt 6</a></span></p>
+  <p id="bron-bastani-2025">Bastani, H., Bastani, O., Sungu, A., Ge, H., Kabakcı, Ö., &amp; Mariman, R. (2025). Generative AI without guardrails can harm learning: Evidence from high school mathematics. <i>Proceedings of the National Academy of Sciences, 122</i>(26), e2422633122. <a href="https://doi.org/10.1073/pnas.2422633122">https://doi.org/10.1073/pnas.2422633122</a><span class="terug">Geciteerd in: <a href="#c-bastani-2025-1">punt 2</a>, <a href="#c-bastani-2025-3">§5</a></span></p>
+  <p id="bron-baumann-2025">Baumann, J., Röttger, P., Urman, A., Wendsjö, A., Plaza-del-Arco, F. M., Gruber, J. B., &amp; Hovy, D. (2025). <i>Large language model hacking: Quantifying the hidden risks of using LLMs for text annotation</i> (arXiv:2509.08825) [Preprint]. arXiv. <a href="https://arxiv.org/abs/2509.08825">https://arxiv.org/abs/2509.08825</a><span class="terug">Geciteerd in: <a href="#c-baumann-2025-1">punt 5</a></span></p>
+  <p id="bron-becker-2025">Becker, J., Rush, N., Barnes, E., &amp; Rein, D. (2025). <i>Measuring the impact of early-2025 AI on experienced open-source developer productivity</i> [Preprint]. METR. <a href="https://arxiv.org/abs/2507.09089">https://arxiv.org/abs/2507.09089</a><span class="terug">Geciteerd in: <a href="#c-becker-2025-1">punt 4</a></span></p>
+  <p id="bron-beekman-2025">Beekman, K., Draaijer, S., Beckers, J., Schagen, E., &amp; Hofman, I. (2025). <i>Visie op toetsing en examinering in het tijdperk van AI: Naar een AI-bewuste toetspraktijk</i>. Npuls. <a href="https://npuls.nl/_assets/3cff3f77-9fb0-4226-adb0-66d44de18c85/Visie-op-toetsing-en-examinering-Npuls.pdf">https://npuls.nl/_assets/3cff3f77-9fb0-4226-adb0-66d44de18c85/Visie-op-toetsing-en-examinering-Npuls.pdf</a><span class="terug">Geciteerd in: <a href="#c-beekman-2025-1">In het kort</a>, <a href="#c-beekman-2025-2">punt 2</a></span></p>
+  <p id="bron-bergenholtz-2026">Bergenholtz, C., Vuculescu, O., Günzel-Jensen, F., &amp; Frederiksen, L. (2026). Leveling up or leveling down? The impact of generative AI on student performance in business schools. <i>Academy of Management Learning &amp; Education, 25</i>(2), 155–186. <a href="https://doi.org/10.5465/amle.2025.0029">https://doi.org/10.5465/amle.2025.0029</a><span class="terug">Geciteerd in: <a href="#c-bergenholtz-2026-1">punt 1</a>, <a href="#c-bergenholtz-2026-2">punt 4</a>, <a href="#c-bergenholtz-2026-3">§5</a></span></p>
+  <p id="bron-bevilacqua-2025">Bevilacqua, S., Ferraris, A., Matzler, K., &amp; Kuděj, M. (2025). Strategic leadership at high altitude: Investigating how AI affects the required skills of top managers. <i>Journal of Business Research</i>. <a href="https://doi.org/10.1016/j.jbusres.2025.115878">https://doi.org/10.1016/j.jbusres.2025.115878</a><span class="terug">Geciteerd in: <a href="#c-bevilacqua-2025-1">punt 1</a>, <a href="#c-bevilacqua-2025-2">punt 7</a></span></p>
+  <p id="bron-bick-2024">Bick, A., Blandin, A., &amp; Deming, D. J. (2024). <i>The rapid adoption of generative AI</i> (NBER Working Paper No. 32966). National Bureau of Economic Research. <a href="https://doi.org/10.3386/w32966">https://doi.org/10.3386/w32966</a><span class="terug">Geciteerd in: <a href="#c-bick-2024-1">§6</a></span></p>
+  <p id="bron-bisbee-2024">Bisbee, J., Clinton, J. D., Dorff, C., Kenkel, B., &amp; Larson, J. M. (2024). Synthetic replacements for human survey data? The perils of large language models. <i>Political Analysis, 32</i>(4), 401–416. <a href="https://doi.org/10.1017/pan.2024.5">https://doi.org/10.1017/pan.2024.5</a><span class="terug">Geciteerd in: <a href="#c-bisbee-2024-1">punt 5</a></span></p>
+  <p id="bron-bcg-2026">Boston Consulting Group. (2026, 3 november). <i>What is AI quietly taking from your workforce?</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=VEOfGR8fqWM">https://www.youtube.com/watch?v=VEOfGR8fqWM</a><span class="terug">Geciteerd in: <a href="#c-bcg-2026-1">punt 1</a></span></p>
+  <p id="bron-boussioux-2024">Boussioux, L., Lane, J. N., Zhang, M., Jacimovic, V., &amp; Lakhani, K. R. (2024). The crowdless future? Generative AI and creative problem-solving. <i>Organization Science</i>. <a href="https://doi.org/10.1287/orsc.2023.18430">https://doi.org/10.1287/orsc.2023.18430</a><span class="terug">Geciteerd in: <a href="#c-boussioux-2024-1">punt 5</a></span></p>
+  <p id="bron-breakstone-2021">Breakstone, J., Smith, M., Wineburg, S., Rapaport, A., Carle, J., Garland, M., &amp; Saavedra, A. (2021). Students’ civic online reasoning: A national portrait. <i>Educational Researcher, 50</i>(8), 505–515. <a href="https://doi.org/10.3102/0013189X211017495">https://doi.org/10.3102/0013189X211017495</a><span class="terug">Geciteerd in: <a href="#c-breakstone-2021-1">§6</a></span></p>
+  <p id="bron-budzyn-2025">Budzyń, K., Romańczyk, M., Kitala, D., Kołodziej, P., Bugajski, M., Adami, H. O., Blom, J., Buszkiewicz, M., Halvorsen, N., Hassan, C., Romańczyk, T., Holme, Ø., Jarus, K., Fielding, S., Kunar, M., Pellise, M., Pilonis, N., Kamiński, M. F., Kalager, M., . . . Mori, Y. (2025). Endoscopist deskilling risk after exposure to artificial intelligence in colonoscopy: A multicentre, observational study. <i>The Lancet Gastroenterology &amp; Hepatology, 10</i>(10), 896–903. <a href="https://doi.org/10.1016/S2468-1253(25)00133-5">https://doi.org/10.1016/S2468-1253(25)00133-5</a><span class="terug">Geciteerd in: <a href="#c-budzyn-2025-1">punt 6</a></span></p>
+  <p id="bron-cao-2025">Cao, C., Arora, R., Cento, P., Budak, A., Manta, K., Farahani, E., Cecere, M., Selemon, A., Sang, J., Gong, L. X., Kloosterman, R., Jiang, S., Saleh, R., Margalik, D., Lin, J., Jomy, J., Xie, J., Chen, D., Gorla, J., . . . Bobrovitz, N. (2025). <i>Automation of systematic reviews with large language models</i> [Preprint]. medRxiv. <a href="https://doi.org/10.1101/2025.06.13.25329541">https://doi.org/10.1101/2025.06.13.25329541</a><span class="terug">Geciteerd in: <a href="#c-cao-2025-1">punt 3</a></span></p>
+  <p id="bron-cvte-zd">College voor Toetsen en Examens. (z.d.). <i>Toegestane hulpmiddelen havo/vwo 2028</i>. Examenblad.nl. <a href="https://www.examenblad.nl/2028/vwo/documenten/toegestane-hulpmiddelen-havo-vwo-2028">https://www.examenblad.nl/2028/vwo/documenten/toegestane-hulpmiddelen-havo-vwo-2028</a><span class="terug">Geciteerd in: <a href="#c-cvte-zd-1">§6</a></span></p>
+  <p id="bron-dellacqua-2026a">Dell'Acqua, F., McFowland, E., III, Mollick, E., Lifshitz, H., Kellogg, K. C., Rajendran, S., Krayer, L., Candelon, F., &amp; Lakhani, K. R. (2026a). Navigating the jagged technological frontier: Field experimental evidence of the effects of artificial intelligence on knowledge worker productivity and quality. <i>Organization Science, 37</i>(2), 403–423. <a href="https://doi.org/10.1287/orsc.2025.21838">https://doi.org/10.1287/orsc.2025.21838</a><span class="terug">Geciteerd in: <a href="#c-dellacqua-2026a-1">punt 3</a>, <a href="#c-dellacqua-2026a-2">§5</a></span></p>
+  <p id="bron-dellacqua-2026b">Dell'Acqua, F., Ayoubi, C., Lifshitz, H., Sadun, R., Mollick, E., Mollick, L., Han, Y., Goldman, J., Nair, H., Taub, S., &amp; Lakhani, K. R. (2026b). The cybernetic teammate: A field experiment on generative AI and teamwork. <i>Organization Science, 37</i>(4), 1217–1242. <a href="https://doi.org/10.1287/orsc.2025.20702">https://doi.org/10.1287/orsc.2025.20702</a><span class="terug">Geciteerd in: <a href="#c-dellacqua-2026b-1">punt 1</a>, <a href="#c-dellacqua-2026b-2">punt 4</a>, <a href="#c-dellacqua-2026b-3">punt 7</a>, <a href="#c-dellacqua-2026b-4">§5</a></span></p>
+  <p id="bron-fernandes-2026">Fernandes, D., Villa, S., Nicholls, S., Haavisto, O., Buschek, D., Schmidt, A., Kosch, T., Shen, C., &amp; Welsch, R. (2026). AI makes you smarter but none the wiser: The disconnect between performance and metacognition. <i>Computers in Human Behavior, 175</i>, 108779. <a href="https://doi.org/10.1016/j.chb.2025.108779">https://doi.org/10.1016/j.chb.2025.108779</a><span class="terug">Geciteerd in: <a href="#c-fernandes-2026-1">punt 4</a></span></p>
+  <p id="bron-fischer-2025">Fischer, M., Rau, H. A., &amp; Rilke, R. M. (2025). <i>AI tutoring enhances student learning without crowding out reading effort</i> (IZA Discussion Paper No. 18338). IZA Institute of Labor Economics. <a href="https://docs.iza.org/dp18338.pdf">https://docs.iza.org/dp18338.pdf</a><span class="terug">Geciteerd in: <a href="#c-fischer-2025-1">punt 2</a></span></p>
+  <p id="bron-gallegos-2026">Gallegos, S. (2026). <i>Guidance over adoption: Experimental evidence on AI-assisted learning</i> (IZA Discussion Paper No. 18513). IZA Institute of Labor Economics. <a href="https://docs.iza.org/dp18513.pdf">https://docs.iza.org/dp18513.pdf</a><span class="terug">Geciteerd in: <a href="#c-gallegos-2026-1">punt 2</a></span></p>
+  <p id="bron-geiecke-2025">Geiecke, F., &amp; Jaravel, X. (2025). <i>Conversations at scale: Robust AI-led interviews with a simple open-source platform</i> (CEPR Discussion Paper No. 19705). Centre for Economic Policy Research. <a href="https://papers.ssrn.com/abstract=4974382">https://papers.ssrn.com/abstract=4974382</a><span class="terug">Geciteerd in: <a href="#c-geiecke-2025-1">punt 7</a></span></p>
+  <p id="bron-gonsalves-2025">Gonsalves, C. (2025). Addressing student non-compliance in AI use declarations: Implications for academic integrity and assessment in higher education. <i>Assessment &amp; Evaluation in Higher Education, 50</i>(4), 592–606. <a href="https://doi.org/10.1080/02602938.2024.2415654">https://doi.org/10.1080/02602938.2024.2415654</a><span class="terug">Geciteerd in: <a href="#c-gonsalves-2025-1">punt 4</a></span></p>
+  <p id="bron-hattie-1996">Hattie, J., &amp; Marsh, H. W. (1996). The relationship between research and teaching: A meta-analysis. <i>Review of Educational Research, 66</i>(4), 507–542. <a href="https://doi.org/10.3102/00346543066004507">https://doi.org/10.3102/00346543066004507</a><span class="terug">Geciteerd in: <a href="#c-hattie-1996-1">§6</a></span></p>
+  <p id="bron-hembree-1986">Hembree, R., &amp; Dessart, D. J. (1986). Effects of hand-held calculators in precollege mathematics education: A meta-analysis. <i>Journal for Research in Mathematics Education, 17</i>(2), 83–99. <a href="https://doi.org/10.2307/749255">https://doi.org/10.2307/749255</a><span class="terug">Geciteerd in: <a href="#c-hembree-1986-1">§6</a></span></p>
+  <p id="bron-hirt-2023">Hirt, J., Nordhausen, T., Appenzeller-Herzog, C., &amp; Ewald, H. (2023). Citation tracking for systematic literature searching: A scoping review. <i>Research Synthesis Methods, 14</i>(3), 563–579. <a href="https://doi.org/10.1002/jrsm.1635">https://doi.org/10.1002/jrsm.1635</a><span class="terug">Geciteerd in: <a href="#c-hirt-2023-1">punt 2</a></span></p>
+  <p id="bron-inspectie-2024">Inspectie van het Onderwijs. (2024). <i>Technisch rapport docentprofessionalisering in het hoger onderwijs</i> (De Staat van het Onderwijs 2024). <a href="https://www.onderwijsinspectie.nl/binaries/onderwijsinspectie/documenten/rapporten/2024/04/17/technisch-rapport-docentprofessionalisering-in-het-ho/Technisch+rapport+docentprofessionalisering+in+het+hoger+onderwijs+-+De+Staat+van+het+Onderwijs+2024.pdf">https://www.onderwijsinspectie.nl/binaries/onderwijsinspectie/documenten/rapporten/2024/04/17/technisch-rapport-docentprofessionalisering-in-het-ho/Technisch+rapport+docentprofessionalisering+in+het+hoger+onderwijs+-+De+Staat+van+het+Onderwijs+2024.pdf</a><span class="terug">Geciteerd in: <a href="#c-inspectie-2024-1">§6</a></span></p>
+  <p id="bron-inspectie-2025">Inspectie van het Onderwijs. (2025). <i>Verder vooruit: Examencommissies in een veranderend hoger onderwijs</i>. <a href="https://www.onderwijsinspectie.nl/documenten/2025/12/01/rapport-examencommissies-hoger-onderwijs">https://www.onderwijsinspectie.nl/documenten/2025/12/01/rapport-examencommissies-hoger-onderwijs</a><span class="terug">Geciteerd in: <a href="#c-inspectie-2025-1">§1</a></span></p>
+  <p id="bron-inspectie-2026">Inspectie van het Onderwijs. (2026). <i>De staat van het onderwijs 2026</i>. <a href="https://www.onderwijsinspectie.nl/documenten/2026/04/15/rapport-de-staat-van-het-onderwijs-2026">https://www.onderwijsinspectie.nl/documenten/2026/04/15/rapport-de-staat-van-het-onderwijs-2026</a><span class="terug">Geciteerd in: <a href="#c-inspectie-2026-1">§1</a></span></p>
+  <p id="bron-jabarian-2025">Jabarian, B., &amp; Imas, A. (2025). <i>Artificial writing and automated detection</i> (NBER Working Paper No. 34223). National Bureau of Economic Research. <a href="https://www.nber.org/papers/w34223">https://www.nber.org/papers/w34223</a><span class="terug">Geciteerd in: <a href="#c-jabarian-2025-1">punt 4</a></span></p>
+  <p id="bron-jahani-2025">Jahani, E., Manning, B. S., Zhang, J., TuYe, H.-Y., Alsobay, M., Nicolaides, C., Suri, S., &amp; Holtz, D. (2025). Prompt adaptation as a dynamic complement in generative AI systems. <i>Information Systems Research</i>. <a href="https://doi.org/10.1287/isre.2025.2029">https://doi.org/10.1287/isre.2025.2029</a><span class="terug">Geciteerd in: <a href="#c-jahani-2025-1">punt 6</a></span></p>
+  <p id="bron-jowsey-2026">Jowsey, T., Braun, V., Clarke, V., Lupton, D., &amp; Fine, M. (2026). We reject the use of generative artificial intelligence for reflexive qualitative research. <i>Qualitative Inquiry, 32</i>(10), 931–935. <a href="https://doi.org/10.1177/10778004251401851">https://doi.org/10.1177/10778004251401851</a><span class="terug">Geciteerd in: <a href="#c-jowsey-2026-1">punt 5</a></span></p>
+  <p id="bron-kestin-2025">Kestin, G., Miller, K., Klales, A., Milbourne, T., &amp; Ponti, G. (2025). AI tutoring outperforms in-class active learning: An RCT introducing a novel research-based design in an authentic educational setting. <i>Scientific Reports, 15</i>, 17458. <a href="https://doi.org/10.1038/s41598-025-97652-6">https://doi.org/10.1038/s41598-025-97652-6</a><span class="terug">Geciteerd in: <a href="#c-kestin-2025-1">punt 2</a></span></p>
+  <p id="bron-kumar-2025">Kumar, H., Rothschild, D. M., Goldstein, D. G., &amp; Hofman, J. M. (2025). Math education with large language models: Peril or promise? In <i>Artificial Intelligence in Education (AIED 2025)</i> (pp. 60–75). Springer. <a href="https://doi.org/10.1007/978-3-031-98459-4_5">https://doi.org/10.1007/978-3-031-98459-4_5</a><span class="terug">Geciteerd in: <a href="#c-kumar-2025-1">punt 2</a></span></p>
+  <p id="bron-langchain-2026">LangChain. (2026, 11 augustus). <i>How Toyota uses deep agents to speed up R&amp;D and manufacturing research</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=oK_wPTUshRc">https://www.youtube.com/watch?v=oK_wPTUshRc</a><span class="terug">Geciteerd in: <a href="#c-langchain-2026-1">punt 5</a></span></p>
+  <p id="bron-lau-2025">Lau, O., &amp; Golder, S. (2025). Comparison of Elicit AI and traditional literature searching in evidence syntheses using four case studies. <i>Cochrane Evidence Synthesis and Methods, 3</i>(6), e70050. <a href="https://doi.org/10.1002/cesm.70050">https://doi.org/10.1002/cesm.70050</a><span class="terug">Geciteerd in: <a href="#c-lau-2025-1">punt 3</a></span></p>
+  <p id="bron-lee-2025">Lee, H.-P., Sarkar, A., Tankelevitch, L., Drosos, I., Rintel, S., Banks, R., &amp; Wilson, N. (2025). The impact of generative AI on critical thinking: Self-reported reductions in cognitive effort and confidence effects from a survey of knowledge workers. In <i>Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems</i> (pp. 1–22). ACM. <a href="https://doi.org/10.1145/3706598.3713778">https://doi.org/10.1145/3706598.3713778</a><span class="terug">Geciteerd in: <a href="#c-lee-2025-1">punt 1</a></span></p>
+  <p id="bron-linardon-2025">Linardon, J., Jarman, H. K., McClure, Z., Anderson, C., Liu, C., &amp; Messer, M. (2025). Influence of topic familiarity and prompt specificity on citation fabrication in mental health research using large language models: Experimental study. <i>JMIR Mental Health, 12</i>, e80371. <a href="https://doi.org/10.2196/80371">https://doi.org/10.2196/80371</a><span class="terug">Geciteerd in: <a href="#c-linardon-2025-1">punt 3</a></span></p>
+  <p id="bron-liu-2026">Liu, J., Sweet, T., Chen, M. H., Engelberg, J., Masters, M. C., Clark, M., Persaud, A., Lancaster, A., Hollingsworth, J. K., &amp; Rice, J. K. (2026). <i>The effects of course-integrated AI tutoring on student performance and engagement: A randomized university trial</i> (EdWorkingPaper No. 26-1598). Annenberg Institute at Brown University. <a href="https://doi.org/10.26300/y3f8-vh05">https://doi.org/10.26300/y3f8-vh05</a><span class="terug">Geciteerd in: <a href="#c-liu-2026-1">punt 2</a></span></p>
+  <p id="bron-mckinsey-2026a">McKinsey &amp; Company. (2026a, 1 augustus). <i>The biggest AI opportunity isn't replacing people | Stanford economist</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=u76xdhpF474">https://www.youtube.com/watch?v=u76xdhpF474</a><span class="terug">Geciteerd in: <a href="#c-mckinsey-2026a-1">punt 6</a></span></p>
+  <p id="bron-mckinsey-2026b">McKinsey &amp; Company. (2026b, 8 november). <i>Driving agentic transformation: How AI is rewriting the playbook on large-scale change</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=XZcbnO2m9UE">https://www.youtube.com/watch?v=XZcbnO2m9UE</a><span class="terug">Geciteerd in: <a href="#c-mckinsey-2026b-1">punt 6</a></span></p>
+  <p id="bron-mckinsey-2026c">McKinsey &amp; Company. (2026c, 16 november). <i>Using generative AI to conduct outside-in diligence</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=tZA9Bi1m_rk">https://www.youtube.com/watch?v=tZA9Bi1m_rk</a><span class="terug">Geciteerd in: <a href="#c-mckinsey-2026c-1">punt 1</a>, <a href="#c-mckinsey-2026c-2">punt 3</a>, <a href="#c-mckinsey-2026c-3">punt 6</a></span></p>
+  <p id="bron-metr-2026">METR. (2026, 24 februari). <i>We are changing our developer productivity experiment design</i>. <a href="https://metr.org/blog/2026-02-24-uplift-update/">https://metr.org/blog/2026-02-24-uplift-update/</a><span class="terug">Geciteerd in: <a href="#c-metr-2026-1">punt 4</a></span></p>
+  <p id="bron-nvao-2026">NVAO. (2026). <i>Startverkenning generatieve artificiële intelligentie: Thematische analyse kwaliteitszorg</i>. Nederlands-Vlaamse Accreditatieorganisatie. <a href="https://www.nvao.net/files/attachments/.13866/Startverkenning_Generatieve_Artificiele_Intelligentie.pdf">https://www.nvao.net/files/attachments/.13866/Startverkenning_Generatieve_Artificiele_Intelligentie.pdf</a><span class="terug">Geciteerd in: <a href="#c-nvao-2026-1">§1</a></span></p>
+  <p id="bron-okumura-2026">Okumura, T., Kudo, S.-E., Ide, Y., Kato, S., Miyata, Y., Takisima, K., Takashina, Y., Minegishi, Y., Abe, M., Sakurai, T., Koyama, Y., Kato, K., Maeda, Y., Ogawa, Y., Ichimasa, K., Ogata, N., Hayashi, T., Wakamura, K., Baba, T., . . . Misawa, M. (2026). Long-term impact of computer-aided adenoma detection: A prospective observational study. <i>Endoscopy, 58</i>(2), 121–129. <a href="https://doi.org/10.1055/a-2661-2624">https://doi.org/10.1055/a-2661-2624</a><span class="terug">Geciteerd in: <a href="#c-okumura-2026-1">punt 6</a></span></p>
+  <p id="bron-pedersen-2026">Pedersen, T. A., Mori, Y., Botteri, E., Engjom, T., Seip, B., Dimcevski, G. G., &amp; Havre, R. F. (2026). Learning and deskilling effects of artificial intelligence in colonoscopy among endoscopists with different levels of experience: A pragmatic, prospective trial. <i>Endoscopy, 58</i>(9), 1003–1014. <a href="https://doi.org/10.1055/a-2858-7084">https://doi.org/10.1055/a-2858-7084</a><span class="terug">Geciteerd in: <a href="#c-pedersen-2026-1">punt 6</a></span></p>
+  <p id="bron-yang-2025">Peter Yang. (2025, 28 september). <i>AI evaluations clearly explained in 50 minutes (real example)</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=uiza7wp1KrE">https://www.youtube.com/watch?v=uiza7wp1KrE</a><span class="terug">Geciteerd in: <a href="#c-yang-2025-1">punt 5</a></span></p>
+  <p id="bron-rathenau-2026">Rathenau Instituut. (2026). <i>Monitor praktijkgericht onderzoek 2024</i>. <a href="https://www.rathenau.nl/sites/default/files/2026-02/Monitor_praktijkgericht_onderzoek_2024_Rathenau_Instituut.pdf">https://www.rathenau.nl/sites/default/files/2026-02/Monitor_praktijkgericht_onderzoek_2024_Rathenau_Instituut.pdf</a><span class="terug">Geciteerd in: <a href="#c-rathenau-2026-1">§6</a></span></p>
+  <p id="bron-reif-2025">Reif, J. A., Larrick, R. P., &amp; Soll, J. B. (2025). Evidence of a social evaluation penalty for using AI. <i>Proceedings of the National Academy of Sciences, 122</i>(19), e2426766122. <a href="https://doi.org/10.1073/pnas.2426766122">https://doi.org/10.1073/pnas.2426766122</a><span class="terug">Geciteerd in: <a href="#c-reif-2025-1">punt 7</a></span></p>
+  <p id="bron-sarstedt-2024">Sarstedt, M., Adler, S. J., Rau, L., &amp; Schmitt, B. (2024). Using large language models to generate silicon samples in consumer and marketing research: Challenges, opportunities, and guidelines. <i>Psychology &amp; Marketing, 41</i>(6), 1254–1270. <a href="https://doi.org/10.1002/mar.21982">https://doi.org/10.1002/mar.21982</a><span class="terug">Geciteerd in: <a href="#c-sarstedt-2024-1">punt 5</a></span></p>
+  <p id="bron-scarfe-2024">Scarfe, P., Watcham, K., Clarke, A., &amp; Roesch, E. (2024). A real-world test of artificial intelligence infiltration of a university examinations system: A "Turing Test" case study. <i>PLOS ONE, 19</i>(6), e0305354. <a href="https://doi.org/10.1371/journal.pone.0305354">https://doi.org/10.1371/journal.pone.0305354</a><span class="terug">Geciteerd in: <a href="#c-scarfe-2024-1">punt 4</a></span></p>
+  <p id="bron-schut-2021">Schut, S., Maggio, L. A., Heeneman, S., van Tartwijk, J., van der Vleuten, C., &amp; Driessen, E. (2021). Where the rubber meets the road: An integrative review of programmatic assessment in health care professions education. <i>Perspectives on Medical Education, 10</i>(1), 6–13. <a href="https://doi.org/10.1007/s40037-020-00625-w">https://doi.org/10.1007/s40037-020-00625-w</a><span class="terug">Geciteerd in: <a href="#c-schut-2021-1">§6</a></span></p>
+  <p id="bron-seifi-2026">Seifi, A., &amp; Seyfi, A. (2026). Hallucination rate of peer-reviewed citations generated by large language models in neurocritical care. <i>Critical Care Explorations, 8</i>(9), e1474. <a href="https://doi.org/10.1097/CCE.0000000000001474">https://doi.org/10.1097/CCE.0000000000001474</a><span class="terug">Geciteerd in: <a href="#c-seifi-2026-1">punt 3</a></span></p>
+  <p id="bron-svg-2026">Silicon Valley Girl. (2026, 30 oktober). <i>Harvard AI professor: The people most at risk from AI aren't who you think</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=vFOnDsy58NU">https://www.youtube.com/watch?v=vFOnDsy58NU</a><span class="terug">Geciteerd in: <a href="#c-svg-2026-1">punt 2</a></span></p>
+  <p id="bron-sinek-2026">Simon Sinek. (2026, 16 juni). <i>The AI skills nobody is teaching (and everyone needs): Ethan Mollick on A Bit of Optimism</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=9YMYVb1ASCg">https://www.youtube.com/watch?v=9YMYVb1ASCg</a><span class="terug">Geciteerd in: <a href="#c-sinek-2026-1">punt 2</a>, <a href="#c-sinek-2026-2">punt 6</a></span></p>
+  <p id="bron-themagroep-2025">Themagroep AI – Toetsing, HAN Leernetwerk Toetsing. (2025). <i>AI-bestendig toetsen: Een toolkit voor het analyseren van toetsen</i> (Versie 2). Hogeschool van Arnhem en Nijmegen. <a href="https://www.han.nl/onderwijsondersteuning/leren-werken-met-ict/artificial-intelligence/Toolkit-AI-bestendig-toetsen-Versie-2-maart-2025.pdf">https://www.han.nl/onderwijsondersteuning/leren-werken-met-ict/artificial-intelligence/Toolkit-AI-bestendig-toetsen-Versie-2-maart-2025.pdf</a><span class="terug">Geciteerd in: <a href="#c-themagroep-2025-1">In het kort</a>, <a href="#c-themagroep-2025-2">punt 4</a></span></p>
+  <p id="bron-tornberg-2025">Törnberg, P. (2025). Large language models outperform expert coders and supervised classifiers at annotating political social media messages. <i>Social Science Computer Review, 43</i>(6), 1181–1195. <a href="https://doi.org/10.1177/08944393241286471">https://doi.org/10.1177/08944393241286471</a><span class="terug">Geciteerd in: <a href="#c-tornberg-2025-1">punt 5</a></span></p>
+  <p id="bron-uva-2026">Universiteit van Amsterdam. (2026, 19 november). <i>Nederlandse bedrijven omarmen AI, maar baanbrekende innovatie blijft achter</i> [Persbericht over de Nederlandse Innovatie Monitor 2026]. <a href="https://www.uva.nl/nieuws/2026/nederlandse-bedrijven-omarmen-ai-maar-baanbrekende-innovatie-blijft-achter">https://www.uva.nl/nieuws/2026/nederlandse-bedrijven-omarmen-ai-maar-baanbrekende-innovatie-blijft-achter</a><span class="terug">Geciteerd in: <a href="#c-uva-2026-1">punt 2</a>, <a href="#c-uva-2026-2">§6</a></span></p>
+  <p id="bron-vanpopta-2025">Van Popta, E., Langestraat, J., Bles, B., Van Elk, A., &amp; Heijmans, E. (2025). <i>Integraal AI-kader HAN</i> (Versie 1.0). Hogeschool van Arnhem en Nijmegen. <a href="https://www.han.nl/onderwijsondersteuning/leren-werken-met-ict/artificial-intelligence/ai-in-je-onderwijs/Integraal-AI-kader-HAN-1.0-27062025.pdf">https://www.han.nl/onderwijsondersteuning/leren-werken-met-ict/artificial-intelligence/ai-in-je-onderwijs/Integraal-AI-kader-HAN-1.0-27062025.pdf</a><span class="terug">Geciteerd in: <a href="#c-vanpopta-2025-1">In het kort</a></span></p>
+  <p id="bron-walker-2025">Walker, D. O. H., &amp; Larson, M. (2025). Leveraging generative artificial intelligence (AI) for human resource management: The AI job description assignment. <i>Journal of Management Education, 49</i>(1), 113–141. <a href="https://doi.org/10.1177/10525629241294075">https://doi.org/10.1177/10525629241294075</a><span class="terug">Geciteerd in: <a href="#c-walker-2025-1">punt 7</a></span></p>
+  <p id="bron-wessels-2021">Wessels, I., Rueß, J., Gess, C., Deicke, W., &amp; Ziegler, M. (2021). Is research-based learning effective? Evidence from a pre–post analysis in the social sciences. <i>Studies in Higher Education, 46</i>(12), 2595–2609. <a href="https://doi.org/10.1080/03075079.2020.1739014">https://doi.org/10.1080/03075079.2020.1739014</a><span class="terug">Geciteerd in: <a href="#c-wessels-2021-1">§4</a></span></p>
+  <p id="bron-westwood-2025">Westwood, S. J. (2025). The potential existential threat of large language models to online survey research. <i>Proceedings of the National Academy of Sciences, 122</i>(47), e2518075122. <a href="https://doi.org/10.1073/pnas.2518075122">https://doi.org/10.1073/pnas.2518075122</a><span class="terug">Geciteerd in: <a href="#c-westwood-2025-1">punt 5</a></span></p>
+  <p id="bron-wef-2026">World Economic Forum. (2026, 22 juli). <i>AI and jobs series: How entry level jobs are changing in an AI era</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=kP5HsxbK-60">https://www.youtube.com/watch?v=kP5HsxbK-60</a><span class="terug">Geciteerd in: <a href="#c-wef-2026-1">punt 7</a></span></p>
+  <p id="bron-wu-2025">Wu, K., Wu, E., Wei, K., Zhang, A., Casasola, A., Nguyen, T., Riantawan, S., Shi, P., Ho, D., &amp; Zou, J. (2025). An automated framework for assessing how well LLMs cite relevant medical references. <i>Nature Communications, 16</i>(1), 3615. <a href="https://doi.org/10.1038/s41467-025-58551-6">https://doi.org/10.1038/s41467-025-58551-6</a><span class="terug">Geciteerd in: <a href="#c-wu-2025-1">punt 3</a></span></p>
+  <p id="bron-wuttke-2025">Wuttke, A., Aßenmacher, M., Klamm, C., Lang, M. M., Würschinger, Q., &amp; Kreuter, F. (2025). AI conversational interviewing: Transforming surveys with LLMs as adaptive interviewers. In <i>Proceedings of the 9th Joint SIGHUM Workshop on Computational Linguistics for Cultural Heritage, Social Sciences, Humanities and Literature (LaTeCH-CLfL 2025)</i>. Association for Computational Linguistics. <a href="https://aclanthology.org/2025.latechclfl-1.17">https://aclanthology.org/2025.latechclfl-1.17</a><span class="terug">Geciteerd in: <a href="#c-wuttke-2025-1">punt 7</a></span></p>
+  <p id="bron-yc-2026">Y Combinator. (2026, 7 september). <i>Why the harness matters more than the model | YC Paper Club</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=n9xKblqyQ28">https://www.youtube.com/watch?v=n9xKblqyQ28</a><span class="terug">Geciteerd in: <a href="#c-yc-2026-1">punt 6</a>, <a href="#c-yc-2026-2">punt 7</a></span></p>
+</section>
+
+<footer class="voet">
+  <span>Notitie onderzoekend vermogen en AI · eerste verkenning · 18 november 2026</span>
+  <svg class="logo" viewBox="0 0 82 34" aria-hidden="true"><g fill="currentColor"><path d="m82 34h-19v-3h18.9895719z"/><path d="m13.2527473 28v-12.420318h-8.48351653v12.420318h-4.76923077v-28h4.75824176v11.3563397h8.48351644v-11.3563397h4.7582418v28z"/><path d="m55.5599506 28-8.1433869-19.77045366h-.1223733l.0778739 19.77045366h-4.3720643v-28h5.5624227l8.065513 19.8898798h.1557479v-19.8898798h4.2163164v28z"/><path d="m33.1342079 0h-5.7320888l-4.5665994 18.7860465-3.8355197 1.324031 1.1972755 3.6682171 1.5469223-.531783-1.1548941 4.7534884h4.2381433l1.536327-6.3271318 7.2790111-2.496124 2.1190716 8.8232558h4.2381433zm-5.7320888 17.2015504 2.723007-11.17829459h.2754793l2.2780021 9.36589149z"/></g></svg>
+</footer>
+
+</main>
+</body>
+</html>
